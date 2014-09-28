@@ -1,0 +1,2 @@
+obj/cust_auth.o: auth/private/cust_auth.c /usr/include/stdc-predef.h \
+ auth/private/inc/sign_img.h

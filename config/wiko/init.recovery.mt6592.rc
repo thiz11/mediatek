@@ -1,0 +1,2 @@
+on boot
+    write /sys/class/leds/button-backlight/brightness 1

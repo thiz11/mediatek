@@ -1,0 +1,2156 @@
+IWifiManager:
+1: List<WifiConfiguration> getConfiguredNetworks();
+2: int addOrUpdateNetwork(in WifiConfiguration config);
+3: boolean removeNetwork(int netId);
+4: boolean enableNetwork(int netId, boolean disableOthers);
+5: boolean disableNetwork(int netId);
+6: boolean pingSupplicant();
+7: void startScan(boolean forceActive);
+8: List<ScanResult> getScanResults();
+9: void disconnect();
+10: void reconnect();
+11: void reassociate();
+12: WifiInfo getConnectionInfo();
+13: boolean setWifiEnabled(boolean enable);
+14: int getWifiEnabledState();
+15: void setCountryCode(String country, boolean persist);
+16: void setFrequencyBand(int band, boolean persist);
+17: int getFrequencyBand();
+18: boolean isDualBandSupported();
+19: boolean saveConfiguration();
+20: DhcpInfo getDhcpInfo();
+21: boolean acquireWifiLock(IBinder lock, int lockType, String tag, in WorkSource ws);
+22: void updateWifiLockWorkSource(IBinder lock, in WorkSource ws);
+23: boolean releaseWifiLock(IBinder lock);
+24: void initializeMulticastFiltering();
+25: boolean isMulticastEnabled();
+26: void acquireMulticastLock(IBinder binder, String tag);
+27: void releaseMulticastLock();
+28: void setWifiApEnabled(in WifiConfiguration wifiConfig, boolean enable);
+29: int getWifiApEnabledState();
+30: WifiConfiguration getWifiApConfiguration();
+31: void setWifiApConfiguration(in WifiConfiguration wifiConfig);
+32: void startWifi();
+33: void stopWifi();
+34: void addToBlacklist(String bssid);
+35: void clearBlacklist();
+36: Messenger getWifiServiceMessenger();
+37: Messenger getWifiStateMachineMessenger();
+38: String getConfigFile();
+39: void captivePortalCheckComplete();
+IWifiP2pManager:
+1: Messenger getMessenger();
+IKeyChainService:
+1: String requestPrivateKey(String alias);
+2: byte[] getCertificate(String alias);
+3: void installCaCertificate(in byte[] caCertificate);
+4: boolean deleteCaCertificate(String alias);
+5: boolean reset();
+6: void setGrant(int uid, String alias, boolean value);
+7: boolean hasGrant(int uid, String alias);
+IKeyChainAliasCallback:
+1: void alias(String alias);
+ILocationProvider:
+1: void enable();
+2: void disable();
+3: void setRequest(in ProviderRequest request, in WorkSource ws);
+4: deprecated (but still supported) ---
+       ProviderProperties getProperties();
+5: int getStatus(out Bundle extras);
+6: long getStatusUpdateTime();
+7: boolean sendExtraCommand(String command, inout Bundle extras);
+IGeocodeProvider:
+1: String getFromLocation(double latitude, double longitude, int maxResults,
+       in GeocoderParams params, out List<Address> addrs);
+2: String getFromLocationName(String locationName,
+       double lowerLeftLatitude, double lowerLeftLongitude,
+       double upperRightLatitude, double upperRightLongitude, int maxResults,
+       in GeocoderParams params, out List<Address> addrs);
+ICountryListener:
+1: void onCountryDetected(in Country country);
+ICountryDetector:
+1: Country detectCountry();
+2: void addCountryListener(in ICountryListener listener);
+3: void removeCountryListener(in ICountryListener listener);
+ILocationListener:
+1: void onLocationChanged(in Location location);
+2: void onStatusChanged(String provider, int status, in Bundle extras);
+3: void onProviderEnabled(String provider);
+4: void onProviderDisabled(String provider);
+IGpsStatusProvider:
+1: void addGpsStatusListener(IGpsStatusListener listener);
+2: void removeGpsStatusListener(IGpsStatusListener listener);
+IGpsStatusListener:
+1: void onGpsStarted();
+2: void onGpsStopped();
+3: void onFirstFix(int ttff);
+4: void onSvStatusChanged(int svCount, in int[] prns, in float[] snrs, 
+       in float[] elevations, in float[] azimuths, 
+       int ephemerisMask, int almanacMask, int usedInFixMask);
+5: void onNmeaReceived(long timestamp, String nmea);
+INetInitiatedListener:
+1: boolean sendNiResponse(int notifId, int userResponse);
+ILocationManager:
+1: void requestLocationUpdates(in LocationRequest request, in ILocationListener listener,
+       in PendingIntent intent, String packageName);
+2: void removeUpdates(in ILocationListener listener, in PendingIntent intent, String packageName);
+3: void requestGeofence(in LocationRequest request, in Geofence geofence,
+       in PendingIntent intent, String packageName);
+4: void removeGeofence(in Geofence fence, in PendingIntent intent, String packageName);
+5: Location getLastLocation(in LocationRequest request, String packageName);
+6: boolean addGpsStatusListener(IGpsStatusListener listener);
+7: void removeGpsStatusListener(IGpsStatusListener listener);
+8: boolean geocoderIsPresent();
+9: String getFromLocation(double latitude, double longitude, int maxResults,
+       in GeocoderParams params, out List<Address> addrs);
+10: String getFromLocationName(String locationName,
+       double lowerLeftLatitude, double lowerLeftLongitude,
+       double upperRightLatitude, double upperRightLongitude, int maxResults,
+       in GeocoderParams params, out List<Address> addrs);
+11: boolean sendNiResponse(int notifId, int userResponse);
+12: List<String> getAllProviders();
+13: List<String> getProviders(in Criteria criteria, boolean enabledOnly);
+14: String getBestProvider(in Criteria criteria, boolean enabledOnly);
+15: boolean providerMeetsCriteria(String provider, in Criteria criteria);
+16: ProviderProperties getProviderProperties(String provider);
+17: boolean isProviderEnabled(String provider);
+18: void addTestProvider(String name, in ProviderProperties properties);
+19: void removeTestProvider(String provider);
+20: void setTestProviderLocation(String provider, in Location loc);
+21: void clearTestProviderLocation(String provider);
+22: void setTestProviderEnabled(String provider, boolean enabled);
+23: void clearTestProviderEnabled(String provider);
+24: void setTestProviderStatus(String provider, int status, in Bundle extras, long updateTime);
+25: void clearTestProviderStatus(String provider);
+26: boolean sendExtraCommand(String provider, String command, inout Bundle extras);
+27: void reportLocation(in Location location, boolean passive);
+28: void locationCallbackFinished(ILocationListener listener);
+ILockSettings:
+1: void setBoolean(in String key, in boolean value, in int userId);
+2: void setLong(in String key, in long value, in int userId);
+3: void setString(in String key, in String value, in int userId);
+4: boolean getBoolean(in String key, in boolean defaultValue, in int userId);
+5: long getLong(in String key, in long defaultValue, in int userId);
+6: String getString(in String key, in String defaultValue, in int userId);
+7: void setLockPattern(in byte[] hash, int userId);
+8: boolean checkPattern(in byte[] hash, int userId);
+9: void setLockPassword(in byte[] hash, int userId);
+10: boolean checkPassword(in byte[] hash, int userId);
+11: boolean havePattern(int userId);
+12: boolean havePassword(int userId);
+13: void removeUser(int userId);
+IRemoteViewsAdapterConnection:
+1: void onServiceConnected(IBinder service);
+2: void onServiceDisconnected();
+IRemoteViewsFactory:
+1: void onDataSetChanged();
+2: oneway void onDataSetChangedAsync();
+3: oneway void onDestroy(in Intent intent);
+4: int getCount();
+5: RemoteViews getViewAt(int position);
+6: RemoteViews getLoadingView();
+7: int getViewTypeCount();
+8: long getItemId(int position);
+9: boolean hasStableIds();
+10: boolean isCreated();
+IAppWidgetService:
+1: int[] startListening(IAppWidgetHost host, String packageName, int hostId,
+       out List<RemoteViews> updatedViews);
+2: void stopListening(int hostId);
+3: int allocateAppWidgetId(String packageName, int hostId);
+4: void deleteAppWidgetId(int appWidgetId);
+5: void deleteHost(int hostId);
+6: void deleteAllHosts();
+7: RemoteViews getAppWidgetViews(int appWidgetId);
+8: void updateAppWidgetIds(in int[] appWidgetIds, in RemoteViews views);
+9: void updateAppWidgetOptions(int appWidgetId, in Bundle extras);
+10: Bundle getAppWidgetOptions(int appWidgetId);
+11: void partiallyUpdateAppWidgetIds(in int[] appWidgetIds, in RemoteViews views);
+12: void updateAppWidgetProvider(in ComponentName provider, in RemoteViews views);
+13: void notifyAppWidgetViewDataChanged(in int[] appWidgetIds, int viewId);
+14: List<AppWidgetProviderInfo> getInstalledProviders();
+15: AppWidgetProviderInfo getAppWidgetInfo(int appWidgetId);
+16: boolean hasBindAppWidgetPermission(in String packageName);
+17: void setBindAppWidgetPermission(in String packageName, in boolean permission);
+18: void bindAppWidgetId(int appWidgetId, in ComponentName provider, in Bundle options);
+19: boolean bindAppWidgetIdIfAllowed(
+       in String packageName, int appWidgetId, in ComponentName provider, in Bundle options);
+20: void bindRemoteViewsService(int appWidgetId, in Intent intent, in IBinder connection);
+21: void unbindRemoteViewsService(int appWidgetId, in Intent intent);
+22: int[] getAppWidgetIds(in ComponentName provider);
+IAppWidgetHost:
+1: void updateAppWidget(int appWidgetId, in RemoteViews views);
+2: void providerChanged(int appWidgetId, in AppWidgetProviderInfo info);
+3: void providersChanged();
+4: void viewDataChanged(int appWidgetId, int viewId);
+ISpellCheckerSessionListener:
+1: void onGetSuggestions(in SuggestionsInfo[] results);
+2: void onGetSentenceSuggestions(in SentenceSuggestionsInfo[] result);
+ISpellCheckerSession:
+1: void onGetSuggestionsMultiple(
+       in TextInfo[] textInfos, int suggestionsLimit, boolean multipleWords);
+2: void onGetSentenceSuggestionsMultiple(in TextInfo[] textInfos, int suggestionsLimit);
+3: void onCancel();
+4: void onClose();
+ISpellCheckerService:
+1: ISpellCheckerSession getISpellCheckerSession(
+       String locale, ISpellCheckerSessionListener listener, in Bundle bundle);
+ITextServicesSessionListener:
+1: oneway void onServiceConnected(in ISpellCheckerSession spellCheckerSession);
+ITextServicesManager:
+1: SpellCheckerInfo getCurrentSpellChecker(String locale);
+2: SpellCheckerSubtype getCurrentSpellCheckerSubtype(
+       String locale, boolean allowImplicitlySelectedSubtype);
+3: oneway void getSpellCheckerService(String sciId, in String locale,
+       in ITextServicesSessionListener tsListener,
+       in ISpellCheckerSessionListener scListener, in Bundle bundle);
+4: oneway void finishSpellCheckerService(in ISpellCheckerSessionListener listener);
+5: oneway void setCurrentSpellChecker(String locale, String sciId);
+6: oneway void setCurrentSpellCheckerSubtype(String locale, int hashCode);
+7: oneway void setSpellCheckerEnabled(boolean enabled);
+8: boolean isSpellCheckerEnabled();
+9: SpellCheckerInfo[] getEnabledSpellCheckers();
+IUsageStats:
+1: void noteResumeComponent(in ComponentName componentName);
+2: void notePauseComponent(in ComponentName componentName);
+3: void noteLaunchTime(in ComponentName componentName, int millis);
+4: PkgUsageStats getPkgUsageStats(in ComponentName componentName);
+5: PkgUsageStats[] getAllPkgUsageStats();
+IBatteryStats:
+1: byte[] getStatistics();
+2: void noteStartWakelock(int uid, int pid, String name, int type);
+3: void noteStopWakelock(int uid, int pid, String name, int type);
+4: void noteStartSensor(int uid, int sensor);
+5: void noteStopSensor(int uid, int sensor);
+6: void noteStartWakelockFromSource(in WorkSource ws, int pid, String name, int type);
+7: void noteStopWakelockFromSource(in WorkSource ws, int pid, String name, int type);
+8: void noteStartGps(int uid);
+9: void noteStopGps(int uid);
+10: void noteScreenOn();
+11: void noteScreenBrightness(int brightness);
+12: void noteScreenOff();
+13: void noteInputEvent();
+14: void noteUserActivity(int uid, int event);
+15: void notePhoneOn();
+16: void notePhoneOff();
+17: void notePhoneSignalStrength(in SignalStrength signalStrength);
+18: void notePhoneDataConnectionState(int dataType, boolean hasData);
+19: void notePhoneState(int phoneState);
+20: void noteWifiOn();
+21: void noteWifiOff();
+22: void noteWifiRunning(in WorkSource ws);
+23: void noteWifiRunningChanged(in WorkSource oldWs, in WorkSource newWs);
+24: void noteWifiStopped(in WorkSource ws);
+25: void noteBluetoothOn();
+26: void noteBluetoothOff();
+27: void noteFullWifiLockAcquired(int uid);
+28: void noteFullWifiLockReleased(int uid);
+29: void noteWifiScanStarted(int uid);
+30: void noteWifiScanStopped(int uid);
+31: void noteWifiMulticastEnabled(int uid);
+32: void noteWifiMulticastDisabled(int uid);
+33: void noteFullWifiLockAcquiredFromSource(in WorkSource ws);
+34: void noteFullWifiLockReleasedFromSource(in WorkSource ws);
+35: void noteWifiScanStartedFromSource(in WorkSource ws);
+36: void noteWifiScanStoppedFromSource(in WorkSource ws);
+37: void noteWifiMulticastEnabledFromSource(in WorkSource ws);
+38: void noteWifiMulticastDisabledFromSource(in WorkSource ws);
+39: void noteNetworkInterfaceType(String iface, int type);
+40: void setBatteryState(int status, int health, int plugType, int level, int temp, int volt);
+41: long getAwakeTimeBattery();
+42: long getAwakeTimePlugged();
+IMediaContainerService:
+1: String copyResourceToContainer(in Uri packageURI, String containerId, String key,
+       String resFileName, String publicResFileName, boolean isExternal,
+       boolean isForwardLocked);
+2: int copyResource(in Uri packageURI, in ContainerEncryptionParams encryptionParams,
+       in ParcelFileDescriptor outStream);
+3: PackageInfoLite getMinimalPackageInfo(in String packagePath, in int flags, in long threshold);
+4: boolean checkInternalFreeStorage(in Uri fileUri, boolean isForwardLocked, in long threshold);
+5: boolean checkExternalFreeStorage(in Uri fileUri, boolean isForwardLocked);
+6: ObbInfo getObbInfo(in String filename);
+7: long calculateDirectorySize(in String directory);
+8: long[] getFileSystemStats(in String path);
+9: void clearDirectory(in String directory);
+10: long calculateInstalledSize(in String packagePath, boolean isForwardLocked);
+IInputMethodSession:
+1: void finishInput();
+2: void updateExtractedText(int token, in ExtractedText text);
+3: void updateSelection(int oldSelStart, int oldSelEnd,
+       int newSelStart, int newSelEnd,
+       int candidatesStart, int candidatesEnd);
+4: void viewClicked(boolean focusChanged);
+5: void updateCursor(in Rect newCursor);
+6: void displayCompletions(in CompletionInfo[] completions);
+7: void dispatchKeyEvent(int seq, in KeyEvent event, IInputMethodCallback callback);
+8: void dispatchTrackballEvent(int seq, in MotionEvent event, IInputMethodCallback callback);
+9: void dispatchGenericMotionEvent(int seq, in MotionEvent event, IInputMethodCallback callback);
+10: void appPrivateCommand(String action, in Bundle data);
+11: void toggleSoftInput(int showFlags, int hideFlags);
+12: void finishSession();
+IInputContextCallback:
+1: void setTextBeforeCursor(CharSequence textBeforeCursor, int seq);
+2: void setTextAfterCursor(CharSequence textAfterCursor, int seq);
+3: void setCursorCapsMode(int capsMode, int seq);
+4: void setExtractedText(in ExtractedText extractedText, int seq);
+5: void setSelectedText(CharSequence selectedText, int seq);
+IInputMethodCallback:
+1: void finishedEvent(int seq, boolean handled);
+2: void sessionCreated(IInputMethodSession session);
+IInputMethodClient:
+1: void setUsingInputMethod(boolean state);
+2: void onBindMethod(in InputBindResult res);
+3: void onUnbindMethod(int sequence);
+4: void setActive(boolean active);
+IInputContext:
+1: void getTextBeforeCursor(int length, int flags, int seq, IInputContextCallback callback); 
+2: void getTextAfterCursor(int length, int flags, int seq, IInputContextCallback callback);
+3: void getCursorCapsMode(int reqModes, int seq, IInputContextCallback callback);
+4: void getExtractedText(in ExtractedTextRequest request, int flags, int seq,
+       IInputContextCallback callback);
+5: void deleteSurroundingText(int leftLength, int rightLength);
+6: void setComposingText(CharSequence text, int newCursorPosition);
+7: void finishComposingText();
+8: void commitText(CharSequence text, int newCursorPosition);
+9: void commitCompletion(in CompletionInfo completion);
+10: void commitCorrection(in CorrectionInfo correction);
+11: void setSelection(int start, int end);
+12: void performEditorAction(int actionCode);
+13: void performContextMenuAction(int id);
+14: void beginBatchEdit();
+15: void endBatchEdit();
+16: void reportFullscreenMode(boolean enabled);
+17: void sendKeyEvent(in KeyEvent event);
+18: void clearMetaKeyStates(int states);
+19: void performPrivateCommand(String action, in Bundle data);
+20: void setComposingRegion(int start, int end);
+21: void getSelectedText(int flags, int seq, IInputContextCallback callback);
+IInputMethod:
+1: void attachToken(IBinder token);
+2: void bindInput(in InputBinding binding);
+3: void unbindInput();
+4: void startInput(in IInputContext inputContext, in EditorInfo attribute);
+5: void restartInput(in IInputContext inputContext, in EditorInfo attribute);
+6: void createSession(IInputMethodCallback callback);
+7: void setSessionEnabled(IInputMethodSession session, boolean enabled);
+8: void revokeSession(IInputMethodSession session);
+9: void showSoftInput(int flags, in ResultReceiver resultReceiver);
+10: void hideSoftInput(int flags, in ResultReceiver resultReceiver);
+11: void changeInputMethodSubtype(in InputMethodSubtype subtype);
+IInputMethodManager:
+1: List<InputMethodInfo> getInputMethodList();
+2: List<InputMethodInfo> getEnabledInputMethodList();
+3: List<InputMethodSubtype> getEnabledInputMethodSubtypeList(in InputMethodInfo imi,
+       boolean allowsImplicitlySelectedSubtypes);
+4: InputMethodSubtype getLastInputMethodSubtype();
+5: List getShortcutInputMethodsAndSubtypes();
+6: void addClient(in IInputMethodClient client,
+       in IInputContext inputContext, int uid, int pid);
+7: void removeClient(in IInputMethodClient client);
+8: InputBindResult startInput(in IInputMethodClient client,
+       IInputContext inputContext, in EditorInfo attribute, int controlFlags);
+9: void finishInput(in IInputMethodClient client);
+10: boolean showSoftInput(in IInputMethodClient client, int flags,
+       in ResultReceiver resultReceiver);
+11: boolean hideSoftInput(in IInputMethodClient client, int flags,
+       in ResultReceiver resultReceiver);
+12: InputBindResult windowGainedFocus(in IInputMethodClient client, in IBinder windowToken,
+       int controlFlags, int softInputMode, int windowFlags,
+       in EditorInfo attribute, IInputContext inputContext);
+13: void showInputMethodPickerFromClient(in IInputMethodClient client);
+14: void showInputMethodAndSubtypeEnablerFromClient(in IInputMethodClient client, String topId);
+15: void setInputMethod(in IBinder token, String id);
+16: void setInputMethodAndSubtype(in IBinder token, String id, in InputMethodSubtype subtype);
+17: void hideMySoftInput(in IBinder token, int flags);
+18: void showMySoftInput(in IBinder token, int flags);
+19: void updateStatusIcon(in IBinder token, String packageName, int iconId);
+20: void setImeWindowStatus(in IBinder token, int vis, int backDisposition);
+21: void registerSuggestionSpansForNotification(in SuggestionSpan[] spans);
+22: boolean notifySuggestionPicked(in SuggestionSpan span, String originalString, int index);
+23: InputMethodSubtype getCurrentInputMethodSubtype();
+24: boolean setCurrentInputMethodSubtype(in InputMethodSubtype subtype);
+25: boolean switchToLastInputMethod(in IBinder token);
+26: boolean switchToNextInputMethod(in IBinder token, boolean onlyCurrentIme);
+27: boolean setInputMethodEnabled(String id, boolean enabled);
+28: oneway void setAdditionalInputMethodSubtypes(String id, in InputMethodSubtype[] subtypes);
+IFaceLockInterface:
+1: void startUi(IBinder containingWindowToken, int x, int y, int width, int height,
+       boolean useLiveliness);
+2: void stopUi();
+3: void registerCallback(IFaceLockCallback cb);
+4: void unregisterCallback(IFaceLockCallback cb);
+IFaceLockCallback:
+1: void unlock();
+2: void cancel();
+3: void reportFailedAttempt();
+4: void pokeWakelock(int millis);
+IStatusBarService:
+1: void expandNotificationsPanel();
+2: void collapsePanels();
+3: void disable(int what, IBinder token, String pkg);
+4: void setIcon(String slot, String iconPackage, int iconId, int iconLevel, String contentDescription);
+5: void setIconVisibility(String slot, boolean visible);
+6: void removeIcon(String slot);
+7: void topAppWindowChanged(boolean menuVisible);
+8: void setImeWindowStatus(in IBinder token, int vis, int backDisposition);
+9: void expandSettingsPanel();
+10: void setCurrentUser(int newUserId);
+11: void registerStatusBar(IStatusBar callbacks, out StatusBarIconList iconList,
+       out List<IBinder> notificationKeys, out List<StatusBarNotification> notifications,
+       out int[] switches, out List<IBinder> binders);
+12: void onPanelRevealed();
+13: void onNotificationClick(String pkg, String tag, int id);
+14: void onNotificationError(String pkg, String tag, int id,
+       int uid, int initialPid, String message);
+15: void onClearAllNotifications();
+16: void onNotificationClear(String pkg, String tag, int id);
+17: void setSystemUiVisibility(int vis, int mask);
+18: void setHardKeyboardEnabled(boolean enabled);
+19: void toggleRecentApps();
+20: void preloadRecentApps();
+21: void cancelPreloadRecentApps();
+IStatusBar:
+1: void setIcon(int index, in StatusBarIcon icon);
+2: void removeIcon(int index);
+3: void addNotification(IBinder key, in StatusBarNotification notification);
+4: void updateNotification(IBinder key, in StatusBarNotification notification);
+5: void removeNotification(IBinder key);
+6: void disable(int state);
+7: void animateExpandNotificationsPanel();
+8: void animateExpandSettingsPanel();
+9: void animateCollapsePanels();
+10: void setSystemUiVisibility(int vis, int mask);
+11: void topAppWindowChanged(boolean menuVisible);
+12: void setImeWindowStatus(in IBinder token, int vis, int backDisposition);
+13: void setHardKeyboardStatus(boolean available, boolean enabled);
+14: void toggleRecentApps();
+15: void preloadRecentApps();
+16: void cancelPreloadRecentApps();
+IResultReceiver:
+1: void send(int resultCode, in Bundle resultData);
+IDropBoxManagerService:
+1: void add(in DropBoxManager.Entry entry);
+2: boolean isTagEnabled(String tag);
+3: DropBoxManager.Entry getNextEntry(String tag, long millis);
+IBackupTransport:
+1: Intent configurationIntent();
+2: String currentDestinationString();
+3: String transportDirName();
+4: long requestBackupTime();
+5: return One of {@link BackupConstants#TRANSPORT_OK} (OK so far) or
+       link BackupConstants#TRANSPORT_ERROR} (on network error or other failure).
+5: link BackupConstants#TRANSPORT_ERROR} (on network error or other failure).
+              int initializeDevice();
+6: return one of {@link BackupConstants#TRANSPORT_OK} (OK so far),
+       link BackupConstants#TRANSPORT_ERROR} (on network error or other failure), or
+6: link BackupConstants#TRANSPORT_ERROR} (on network error or other failure), or
+       link BackupConstants#TRANSPORT_NOT_INITIALIZED} (if the backend dataset has
+6: link BackupConstants#TRANSPORT_NOT_INITIALIZED} (if the backend dataset has
+       become lost due to inactive expiry or some other reason and needs re-initializing)
+              int performBackup(in PackageInfo packageInfo, in ParcelFileDescriptor inFd);
+7: int clearBackupData(in PackageInfo packageInfo);
+8: int finishBackup();
+9: or null if an error occurred (the attempt should be rescheduled).
+              RestoreSet[] getAvailableRestoreSets();
+10: long getCurrentRestoreSet();
+11: param packages List of applications to restore (if data is available).
+       Application data will be restored in the order given.
+       return One of {@link BackupConstants#TRANSPORT_OK} (OK so far, call
+11: return One of {@link BackupConstants#TRANSPORT_OK} (OK so far, call
+       link #nextRestorePackage}) or {@link BackupConstants#TRANSPORT_ERROR}
+       an error occurred, the restore should be aborted and rescheduled).
+              int startRestore(long token, in PackageInfo[] packages);
+12: or "" (the empty string) if no more backup data is available,
+       or null if an error occurred (the restore should be aborted and rescheduled).
+12: or null if an error occurred (the restore should be aborted and rescheduled).
+              String nextRestorePackage();
+13: int getRestoreData(in ParcelFileDescriptor outFd);
+14: End a restore session (aborting any in-process data transfer as necessary),
+       freeing any resources and connections used during the restore process.
+              void finishRestore();
+IDreamManager:
+1: void dream();
+2: void awaken();
+3: void setDreamComponents(in ComponentName[] componentNames);
+4: ComponentName[] getDreamComponents();
+5: ComponentName getDefaultDreamComponent();
+6: void testDream(in ComponentName componentName);
+7: boolean isDreaming();
+8: void finishSelf(in IBinder token);
+IDreamService:
+1: void attach(IBinder windowToken);
+2: void detach();
+IWallpaperService:
+1: void attach(IWallpaperConnection connection,
+       IBinder windowToken, int windowType, boolean isPreview,
+       int reqWidth, int reqHeight);
+IWallpaperConnection:
+1: void attachEngine(IWallpaperEngine engine);
+2: void engineShown(IWallpaperEngine engine);
+3: ParcelFileDescriptor setWallpaper(String name);
+IWallpaperEngine:
+1: void setDesiredSize(int width, int height);
+2: void setVisibility(boolean visible);
+3: void dispatchPointer(in MotionEvent event);
+4: void dispatchWallpaperCommand(String action, int x, int y,
+       int z, in Bundle extras);
+5: void destroy();
+IAccountManager:
+1: String getPassword(in Account account);
+2: String getUserData(in Account account, String key);
+3: AuthenticatorDescription[] getAuthenticatorTypes();
+4: Account[] getAccounts(String accountType);
+5: Account[] getAccountsAsUser(String accountType, int userId);
+6: void hasFeatures(in IAccountManagerResponse response, in Account account, in String[] features);
+7: void getAccountsByFeatures(in IAccountManagerResponse response, String accountType, in String[] features);
+8: boolean addAccount(in Account account, String password, in Bundle extras);
+9: void removeAccount(in IAccountManagerResponse response, in Account account);
+10: void invalidateAuthToken(String accountType, String authToken);
+11: String peekAuthToken(in Account account, String authTokenType);
+12: void setAuthToken(in Account account, String authTokenType, String authToken);
+13: void setPassword(in Account account, String password);
+14: void clearPassword(in Account account);
+15: void setUserData(in Account account, String key, String value);
+16: void updateAppPermission(in Account account, String authTokenType, int uid, boolean value);
+17: void getAuthToken(in IAccountManagerResponse response, in Account account,
+       String authTokenType, boolean notifyOnAuthFailure, boolean expectActivityLaunch,
+       in Bundle options);
+18: void addAcount(in IAccountManagerResponse response, String accountType,
+       String authTokenType, in String[] requiredFeatures, boolean expectActivityLaunch,
+       in Bundle options);
+19: void updateCredentials(in IAccountManagerResponse response, in Account account,
+       String authTokenType, boolean expectActivityLaunch, in Bundle options);
+20: void editProperties(in IAccountManagerResponse response, String accountType,
+       boolean expectActivityLaunch);
+21: void confirmCredentialsAsUser(in IAccountManagerResponse response, in Account account,
+       in Bundle options, boolean expectActivityLaunch, int userId);
+22: void getAuthTokenLabel(in IAccountManagerResponse response, String accountType,
+       String authTokenType);
+IAccountManagerResponse:
+1: void onResult(in Bundle value);
+2: void onError(int errorCode, String errorMessage);
+IAccountAuthenticator:
+1: void addAccount(in IAccountAuthenticatorResponse response, String accountType,
+       String authTokenType, in String[] requiredFeatures, in Bundle options);
+2: void confirmCredentials(in IAccountAuthenticatorResponse response, in Account account,
+       in Bundle options);
+3: void getAuthToken(in IAccountAuthenticatorResponse response, in Account account,
+       String authTokenType, in Bundle options);
+4: void getAuthTokenLabel(in IAccountAuthenticatorResponse response, String authTokenType);
+5: void updateCredentials(in IAccountAuthenticatorResponse response, in Account account,
+       String authTokenType, in Bundle options);
+6: void editProperties(in IAccountAuthenticatorResponse response, String accountType);
+7: void hasFeatures(in IAccountAuthenticatorResponse response, in Account account, 
+       in String[] features);
+8: void getAccountRemovalAllowed(in IAccountAuthenticatorResponse response, in Account account);
+IAccountAuthenticatorResponse:
+1: void onResult(in Bundle value);
+2: void onRequestContinued();
+3: void onError(int errorCode, String errorMessage);
+ISyncContext:
+1: void sendHeartbeat();
+2: void onFinished(in SyncResult result);
+IIntentSender:
+1: int send(int code, in Intent intent, String resolvedType,
+       IIntentReceiver finishedReceiver, String requiredPermission);
+IIntentReceiver:
+1: void performReceive(in Intent intent, int resultCode, String data,
+       in Bundle extras, boolean ordered, boolean sticky, int sendingUser);
+IContentService:
+1: void unregisterContentObserver(IContentObserver observer);
+2: void registerContentObserver(in Uri uri, boolean notifyForDescendants,
+       IContentObserver observer, int userHandle);
+3: void notifyChange(in Uri uri, IContentObserver observer,
+       boolean observerWantsSelfNotifications, boolean syncToNetwork,
+       int userHandle);
+4: void requestSync(in Account account, String authority, in Bundle extras);
+5: void cancelSync(in Account account, String authority);
+6: boolean getSyncAutomatically(in Account account, String providerName);
+7: void setSyncAutomatically(in Account account, String providerName, boolean sync);
+8: List<PeriodicSync> getPeriodicSyncs(in Account account, String providerName);
+9: void addPeriodicSync(in Account account, String providerName, in Bundle extras,
+       long pollFrequency);
+10: void removePeriodicSync(in Account account, String providerName, in Bundle extras);
+11: int getIsSyncable(in Account account, String providerName);
+12: void setIsSyncable(in Account account, String providerName, int syncable);
+13: void setMasterSyncAutomatically(boolean flag);
+14: boolean getMasterSyncAutomatically();
+15: boolean isSyncActive(in Account account, String authority);
+16: List<SyncInfo> getCurrentSyncs();
+17: SyncAdapterType[] getSyncAdapterTypes();
+18: SyncStatusInfo getSyncStatus(in Account account, String authority);
+19: boolean isSyncPending(in Account account, String authority);
+20: void addStatusChangeListener(int mask, ISyncStatusObserver callback);
+21: void removeStatusChangeListener(ISyncStatusObserver callback);
+ISyncAdapter:
+1: the sync is finished (successfully or not) ISyncContext.onFinished() must be called.
+       param authority the authority that should be synced
+       param account the account that should be synced
+       param extras SyncAdapter-specific parameters
+              void startSync(ISyncContext syncContext, String authority,
+1: void startSync(ISyncContext syncContext, String authority,
+       in Account account, in Bundle extras);
+2: void cancelSync(ISyncContext syncContext);
+3: void initialize(in Account account, String authority);
+IClipboard:
+1: void setPrimaryClip(in ClipData clip);
+2: ClipData getPrimaryClip(String pkg);
+3: ClipDescription getPrimaryClipDescription();
+4: boolean hasPrimaryClip();
+5: void addPrimaryClipChangedListener(in IOnPrimaryClipChangedListener listener);
+6: void removePrimaryClipChangedListener(in IOnPrimaryClipChangedListener listener);
+7: boolean hasClipboardText();
+ISyncStatusObserver:
+1: void onStatusChanged(int which);
+IOnPrimaryClipChangedListener:
+1: void dispatchPrimaryClipChanged();
+IPackageDeleteObserver:
+1: void packageDeleted(in String packageName, in int returnCode);
+IPackageStatsObserver:
+1: void onGetStatsCompleted(in PackageStats pStats, boolean succeeded);
+IPackageDataObserver:
+1: void onRemoveCompleted(in String packageName, boolean succeeded);
+IPackageMoveObserver:
+1: void packageMoved(in String packageName, int returnCode);
+IPackageInstallObserver:
+1: void packageInstalled(in String packageName, int returnCode);
+IPackageManager:
+1: PackageInfo getPackageInfo(String packageName, int flags, int userId);
+2: int getPackageUid(String packageName, int userId);
+3: int[] getPackageGids(String packageName);
+4: String[] currentToCanonicalPackageNames(in String[] names);
+5: String[] canonicalToCurrentPackageNames(in String[] names);
+6: PermissionInfo getPermissionInfo(String name, int flags);
+7: List<PermissionInfo> queryPermissionsByGroup(String group, int flags);
+8: PermissionGroupInfo getPermissionGroupInfo(String name, int flags);
+9: List<PermissionGroupInfo> getAllPermissionGroups(int flags);
+10: ApplicationInfo getApplicationInfo(String packageName, int flags ,int userId);
+11: ActivityInfo getActivityInfo(in ComponentName className, int flags, int userId);
+12: ActivityInfo getReceiverInfo(in ComponentName className, int flags, int userId);
+13: ServiceInfo getServiceInfo(in ComponentName className, int flags, int userId);
+14: ProviderInfo getProviderInfo(in ComponentName className, int flags, int userId);
+15: int checkPermission(String permName, String pkgName);
+16: int checkUidPermission(String permName, int uid);
+17: boolean addPermission(in PermissionInfo info);
+18: void removePermission(String name);
+19: void grantPermission(String packageName, String permissionName);
+20: void revokePermission(String packageName, String permissionName);
+21: boolean isProtectedBroadcast(String actionName);
+22: int checkSignatures(String pkg1, String pkg2);
+23: int checkUidSignatures(int uid1, int uid2);
+24: String[] getPackagesForUid(int uid);
+25: String getNameForUid(int uid);
+26: int getUidForSharedUser(String sharedUserName);
+27: ResolveInfo resolveIntent(in Intent intent, String resolvedType, int flags, int userId);
+28: List<ResolveInfo> queryIntentActivities(in Intent intent, 
+       String resolvedType, int flags, int userId);
+29: List<ResolveInfo> queryIntentActivityOptions(
+       in ComponentName caller, in Intent[] specifics,
+       in String[] specificTypes, in Intent intent,
+       String resolvedType, int flags, int userId);
+30: List<ResolveInfo> queryIntentReceivers(in Intent intent,
+       String resolvedType, int flags, int userId);
+31: ResolveInfo resolveService(in Intent intent,
+       String resolvedType, int flags, int userId);
+32: List<ResolveInfo> queryIntentServices(in Intent intent,
+       String resolvedType, int flags, int userId);
+33: ParceledListSlice getInstalledPackages(int flags, in String lastRead, in int userId);
+34: ParceledListSlice getInstalledApplications(int flags, in String lastRead, int userId);
+35: List<ApplicationInfo> getPersistentApplications(int flags);
+36: ProviderInfo resolveContentProvider(String name, int flags, int userId);
+37: void querySyncProviders(inout List<String> outNames,
+       inout List<ProviderInfo> outInfo);
+38: List<ProviderInfo> queryContentProviders(
+       String processName, int uid, int flags);
+39: InstrumentationInfo getInstrumentationInfo(
+       in ComponentName className, int flags);
+40: List<InstrumentationInfo> queryInstrumentation(
+       String targetPackage, int flags);
+41: void installPackage(in Uri packageURI, IPackageInstallObserver observer, int flags,
+       in String installerPackageName);
+42: void finishPackageInstall(int token);
+43: void setInstallerPackageName(in String targetPackage, in String installerPackageName);
+44: void deletePackage(in String packageName, IPackageDeleteObserver observer, int flags);
+45: String getInstallerPackageName(in String packageName);
+46: void addPackageToPreferred(String packageName);
+47: void removePackageFromPreferred(String packageName);
+48: List<PackageInfo> getPreferredPackages(int flags);
+49: void addPreferredActivity(in IntentFilter filter, int match,
+       in ComponentName[] set, in ComponentName activity, int userId);
+50: void replacePreferredActivity(in IntentFilter filter, int match,
+       in ComponentName[] set, in ComponentName activity);
+51: void clearPackagePreferredActivities(String packageName);
+52: int getPreferredActivities(out List<IntentFilter> outFilters,
+       out List<ComponentName> outActivities, String packageName);
+53: void setComponentEnabledSetting(in ComponentName componentName,
+       in int newState, in int flags, int userId);
+54: int getComponentEnabledSetting(in ComponentName componentName, int userId);
+55: void setApplicationEnabledSetting(in String packageName, in int newState, int flags, int userId);
+56: int getApplicationEnabledSetting(in String packageName, int userId);
+57: void setPackageStoppedState(String packageName, boolean stopped, int userId);
+58: all applications are deleted (based on last accessed time)
+       to increase the free storage space on the device to
+       the requested value. There is no guarantee that clearing all
+       the cache files from all applications will clear up
+       enough storage to achieve the desired value.
+       param freeStorageSize The number of bytes of storage to be
+       freed by the system. Say if freeStorageSize is XX,
+       and the current free storage is YY,
+       if XX is less than YY, just return. if not free XX-YY number
+       of bytes if possible.
+       param observer call back used to notify when
+       the operation is completed
+              void freeStorageAndNotify(in long freeStorageSize,
+58: void freeStorageAndNotify(in long freeStorageSize,
+       IPackageDataObserver observer);
+59: all applications are deleted (based on last accessed time)
+       to increase the free storage space on the device to
+       the requested value. There is no guarantee that clearing all
+       the cache files from all applications will clear up
+       enough storage to achieve the desired value.
+       param freeStorageSize The number of bytes of storage to be
+       freed by the system. Say if freeStorageSize is XX,
+       and the current free storage is YY,
+       if XX is less than YY, just return. if not free XX-YY number
+       of bytes if possible.
+       param pi IntentSender call back used to
+       notify when the operation is completed.May be null
+       to indicate that no call back is desired.
+              void freeStorage(in long freeStorageSize,
+59: void freeStorage(in long freeStorageSize,
+       in IntentSender pi);
+60: void deleteApplicationCacheFiles(in String packageName, IPackageDataObserver observer);
+61: void clearApplicationUserData(in String packageName, IPackageDataObserver observer, int userId);
+62: void getPackageSizeInfo(in String packageName, int userHandle, IPackageStatsObserver observer);
+63: String[] getSystemSharedLibraryNames();
+64: FeatureInfo[] getSystemAvailableFeatures();
+65: boolean hasSystemFeature(String name);
+66: void enterSafeMode();
+67: boolean isSafeMode();
+68: void systemReady();
+69: boolean hasSystemUidErrors();
+70: void performBootDexOpt();
+71: Ask the package manager to perform dex-opt (if needed) on the given
+       package, if it already hasn't done mode.  Only does this if running
+       in the special development "no pre-dexopt" mode.
+              boolean performDexOpt(String packageName);
+72: void updateExternalMediaStatus(boolean mounted, boolean reportStatus);
+73: PackageCleanItem nextPackageToClean(in PackageCleanItem lastPackage);
+74: void movePackage(String packageName, IPackageMoveObserver observer, int flags);
+75: boolean addPermissionAsync(in PermissionInfo info);
+76: boolean setInstallLocation(int loc);
+77: int getInstallLocation();
+78: void installPackageWithVerification(in Uri packageURI, in IPackageInstallObserver observer,
+       int flags, in String installerPackageName, in Uri verificationURI,
+       in ManifestDigest manifestDigest, in ContainerEncryptionParams encryptionParams);
+79: void installPackageWithVerificationAndEncryption(in Uri packageURI,
+       in IPackageInstallObserver observer, int flags, in String installerPackageName,
+       in VerificationParams verificationParams,
+       in ContainerEncryptionParams encryptionParams);
+80: int installExistingPackage(String packageName);
+81: void verifyPendingInstall(int id, int verificationCode);
+82: void extendVerificationTimeout(int id, int verificationCodeAtTimeout, long millisecondsToDelay);
+83: VerifierDeviceIdentity getVerifierDeviceIdentity();
+84: boolean isFirstBoot();
+85: void setPermissionEnforced(String permission, boolean enforced);
+86: boolean isPermissionEnforced(String permission);
+87: boolean isStorageLow();
+IContentObserver:
+1: oneway void onChange(boolean selfUpdate, in Uri uri);
+INfcAdapter:
+1: INfcTag getNfcTagInterface();
+2: INfcAdapterExtras getNfcAdapterExtrasInterface(in String pkg);
+3: int getState();
+4: boolean disable(boolean saveState);
+5: boolean enable();
+6: boolean enableNdefPush();
+7: boolean disableNdefPush();
+8: boolean isNdefPushEnabled();
+9: void setForegroundDispatch(in PendingIntent intent,
+       in IntentFilter[] filters, in TechListParcel techLists);
+10: void setNdefPushCallback(in INdefPushCallback callback);
+11: void dispatch(in Tag tag);
+12: void setP2pModes(int initatorModes, int targetModes);
+INfcAdapterExtras:
+1: Bundle open(in String pkg, IBinder b);
+2: Bundle close(in String pkg, IBinder b);
+3: Bundle transceive(in String pkg, in byte[] data_in);
+4: int getCardEmulationRoute(in String pkg);
+5: void setCardEmulationRoute(in String pkg, int route);
+6: void authenticate(in String pkg, in byte[] token);
+7: String getDriverName(in String pkg);
+INdefPushCallback:
+1: NdefMessage createMessage();
+2: Uri[] getUris();
+3: void onNdefPushComplete();
+INfcTag:
+1: int close(int nativeHandle);
+2: int connect(int nativeHandle, int technology);
+3: int reconnect(int nativeHandle);
+4: int[] getTechList(int nativeHandle);
+5: boolean isNdef(int nativeHandle);
+6: boolean isPresent(int nativeHandle);
+7: TransceiveResult transceive(int nativeHandle, in byte[] data, boolean raw);
+8: NdefMessage ndefRead(int nativeHandle);
+9: int ndefWrite(int nativeHandle, in NdefMessage msg);
+10: int ndefMakeReadOnly(int nativeHandle);
+11: boolean ndefIsWritable(int nativeHandle);
+12: int formatNdef(int nativeHandle, in byte[] key);
+13: Tag rediscover(int nativehandle);
+14: int setTimeout(int technology, int timeout);
+15: int getTimeout(int technology);
+16: void resetTimeouts();
+17: boolean canMakeReadOnly(int ndefType);
+18: int getMaxTransceiveLength(int technology);
+19: boolean getExtendedLengthApdusSupported();
+IProcessObserver:
+1: void onForegroundActivitiesChanged(int pid, int uid, boolean foregroundActivities);
+2: void onImportanceChanged(int pid, int uid, int importance);
+3: void onProcessDied(int pid, int uid);
+IActivityController:
+1: boolean activityStarting(in Intent intent, String pkg);
+2: boolean activityResuming(String pkg);
+3: An application process has crashed (in Java).  Return true for the
+       normal error recovery (app crash dialog) to occur, false to kill
+3: normal error recovery (app crash dialog) to occur, false to kill
+       it immediately.
+              boolean appCrashed(String processName, int pid,
+3: boolean appCrashed(String processName, int pid,
+       String shortMsg, String longMsg,
+       long timeMillis, String stackTrace);
+4: int appEarlyNotResponding(String processName, int pid, String annotation);
+5: int appNotResponding(String processName, int pid, String processStats);
+IServiceConnection:
+1: void connected(in ComponentName name, IBinder service);
+IWallpaperManagerCallback:
+1: void onWallpaperChanged();
+IActivityPendingResult:
+1: boolean sendResult(int code, String data, in Bundle ex);
+IUiModeManager:
+1: void enableCarMode(int flags);
+2: void disableCarMode(int flags);
+3: int getCurrentModeType();
+4: void setNightMode(int mode);
+5: int getNightMode();
+IStopUserCallback:
+1: void userStopped(int userId);
+2: void userStopAborted(int userId);
+INotificationManager:
+1: void cancelAllNotifications(String pkg, int userId);
+2: void enqueueToast(String pkg, ITransientNotification callback, int duration);
+3: void cancelToast(String pkg, ITransientNotification callback);
+4: void enqueueNotificationWithTag(String pkg, String tag, int id,
+       in Notification notification, inout int[] idReceived, int userId);
+5: void cancelNotificationWithTag(String pkg, String tag, int id, int userId);
+6: void setNotificationsEnabledForPackage(String pkg, boolean enabled);
+7: boolean areNotificationsEnabledForPackage(String pkg);
+ISearchManager:
+1: SearchableInfo getSearchableInfo(in ComponentName launchActivity);
+2: List<SearchableInfo> getSearchablesInGlobalSearch();
+3: List<ResolveInfo> getGlobalSearchActivities();
+4: ComponentName getGlobalSearchActivity();
+5: ComponentName getWebSearchActivity();
+6: ComponentName getAssistIntent(int userHandle);
+IWallpaperManager:
+1: ParcelFileDescriptor setWallpaper(String name);
+2: void setWallpaperComponent(in ComponentName name);
+3: ParcelFileDescriptor getWallpaper(IWallpaperManagerCallback cb,
+       out Bundle outParams);
+4: WallpaperInfo getWallpaperInfo();
+5: void clearWallpaper();
+6: boolean hasNamedWallpaper(String name);
+7: void setDimensionHints(in int width, in int height);
+8: int getWidthHint();
+9: int getHeightHint();
+ITransientNotification:
+1: void show();
+2: void hide();
+IThumbnailRetriever:
+1: Bitmap getThumbnail(int index);
+IInstrumentationWatcher:
+1: void instrumentationStatus(in ComponentName name, int resultCode,
+       in Bundle results);
+2: void instrumentationFinished(in ComponentName name, int resultCode,
+       in Bundle results);
+IAlarmManager:
+1: void set(int type, long triggerAtTime, in PendingIntent operation);
+2: void setRepeating(int type, long triggerAtTime, long interval, in PendingIntent operation);
+3: void setInexactRepeating(int type, long triggerAtTime, long interval, in PendingIntent operation);
+4: void setTime(long millis);
+5: void setTimeZone(String zone);
+6: void remove(in PendingIntent operation);
+IBackupAgent:
+1: void doBackup(in ParcelFileDescriptor oldState,
+       in ParcelFileDescriptor data,
+       in ParcelFileDescriptor newState,
+       int token, IBackupManager callbackBinder);
+2: void doRestore(in ParcelFileDescriptor data, int appVersionCode,
+       in ParcelFileDescriptor newState, int token, IBackupManager callbackBinder);
+3: void doFullBackup(in ParcelFileDescriptor data, int token, IBackupManager callbackBinder);
+4: void doRestoreFile(in ParcelFileDescriptor data, long size,
+       int type, String domain, String path, long mode, long mtime,
+       int token, IBackupManager callbackBinder);
+IThumbnailReceiver:
+1: void newThumbnail(int id, in Bitmap thumbnail, CharSequence description);
+2: void finished();
+IUserSwitchObserver:
+1: void onUserSwitching(int newUserId, IRemoteCallback reply);
+2: void onUserSwitchComplete(int newUserId);
+ISearchManagerCallback:
+1: void onDismiss();
+2: void onCancel();
+IDevicePolicyManager:
+1: void setPasswordQuality(in ComponentName who, int quality, int userHandle);
+2: int getPasswordQuality(in ComponentName who, int userHandle);
+3: void setPasswordMinimumLength(in ComponentName who, int length, int userHandle);
+4: int getPasswordMinimumLength(in ComponentName who, int userHandle);
+5: void setPasswordMinimumUpperCase(in ComponentName who, int length, int userHandle);
+6: int getPasswordMinimumUpperCase(in ComponentName who, int userHandle);
+7: void setPasswordMinimumLowerCase(in ComponentName who, int length, int userHandle);
+8: int getPasswordMinimumLowerCase(in ComponentName who, int userHandle);
+9: void setPasswordMinimumLetters(in ComponentName who, int length, int userHandle);
+10: int getPasswordMinimumLetters(in ComponentName who, int userHandle);
+11: void setPasswordMinimumNumeric(in ComponentName who, int length, int userHandle);
+12: int getPasswordMinimumNumeric(in ComponentName who, int userHandle);
+13: void setPasswordMinimumSymbols(in ComponentName who, int length, int userHandle);
+14: int getPasswordMinimumSymbols(in ComponentName who, int userHandle);
+15: void setPasswordMinimumNonLetter(in ComponentName who, int length, int userHandle);
+16: int getPasswordMinimumNonLetter(in ComponentName who, int userHandle);
+17: void setPasswordHistoryLength(in ComponentName who, int length, int userHandle);
+18: int getPasswordHistoryLength(in ComponentName who, int userHandle);
+19: void setPasswordExpirationTimeout(in ComponentName who, long expiration, int userHandle);
+20: long getPasswordExpirationTimeout(in ComponentName who, int userHandle);
+21: long getPasswordExpiration(in ComponentName who, int userHandle);
+22: boolean isActivePasswordSufficient(int userHandle);
+23: int getCurrentFailedPasswordAttempts(int userHandle);
+24: void setMaximumFailedPasswordsForWipe(in ComponentName admin, int num, int userHandle);
+25: int getMaximumFailedPasswordsForWipe(in ComponentName admin, int userHandle);
+26: boolean resetPassword(String password, int flags, int userHandle);
+27: void setMaximumTimeToLock(in ComponentName who, long timeMs, int userHandle);
+28: long getMaximumTimeToLock(in ComponentName who, int userHandle);
+29: void lockNow();
+30: void wipeData(int flags, int userHandle);
+31: ComponentName setGlobalProxy(in ComponentName admin, String proxySpec, String exclusionList, int userHandle);
+32: ComponentName getGlobalProxyAdmin(int userHandle);
+33: int setStorageEncryption(in ComponentName who, boolean encrypt, int userHandle);
+34: boolean getStorageEncryption(in ComponentName who, int userHandle);
+35: int getStorageEncryptionStatus(int userHandle);
+36: void setCameraDisabled(in ComponentName who, boolean disabled, int userHandle);
+37: boolean getCameraDisabled(in ComponentName who, int userHandle);
+38: void setKeyguardDisabledFeatures(in ComponentName who, int which, int userHandle);
+39: int getKeyguardDisabledFeatures(in ComponentName who, int userHandle);
+40: void setActiveAdmin(in ComponentName policyReceiver, boolean refreshing, int userHandle);
+41: boolean isAdminActive(in ComponentName policyReceiver, int userHandle);
+42: List<ComponentName> getActiveAdmins(int userHandle);
+43: boolean packageHasActiveAdmins(String packageName, int userHandle);
+44: void getRemoveWarning(in ComponentName policyReceiver, in RemoteCallback result, int userHandle);
+45: void removeActiveAdmin(in ComponentName policyReceiver, int userHandle);
+46: boolean hasGrantedPolicy(in ComponentName policyReceiver, int usesPolicy, int userHandle);
+47: void setActivePasswordState(int quality, int length, int letters, int uppercase, int lowercase,
+       int numbers, int symbols, int nonletter, int userHandle);
+48: void reportFailedPasswordAttempt(int userHandle);
+49: void reportSuccessfulPasswordAttempt(int userHandle);
+IBackupManager:
+1: void dataChanged(String packageName);
+2: void clearBackupData(String packageName);
+3: void agentConnected(String packageName, IBinder agent);
+4: void agentDisconnected(String packageName);
+5: void restoreAtInstall(String packageName, int token);
+6: void setBackupEnabled(boolean isEnabled);
+7: void setAutoRestore(boolean doAutoRestore);
+8: void setBackupProvisioned(boolean isProvisioned);
+9: boolean isBackupEnabled();
+10: boolean setBackupPassword(in String currentPw, in String newPw);
+11: boolean hasBackupPassword();
+12: void backupNow();
+13: the contents of the device's shared storage (SD card or equivalent).
+       param allApps If <code>true</code>, the resulting tar stream will include all
+       installed applications' data, not just those named in the <code>packageNames</code>
+       parameter.
+       param allIncludesSystem If {@code true}, then {@code allApps} will be interpreted
+       as including packages pre-installed as part of the system. If {@code false},
+       then setting {@code allApps} to {@code true} will mean only that all 3rd-party
+       applications will be included in the dataset.
+       param packageNames The package names of the apps whose data (and optionally .apk files)
+13: param packageNames The package names of the apps whose data (and optionally .apk files)
+       are to be backed up.  The <code>allApps</code> parameter supersedes this.
+              void fullBackup(in ParcelFileDescriptor fd, boolean includeApks, boolean includeShared,
+13: void fullBackup(in ParcelFileDescriptor fd, boolean includeApks, boolean includeShared,
+       boolean allApps, boolean allIncludesSystem, in String[] packageNames);
+14: void fullRestore(in ParcelFileDescriptor fd);
+15: void acknowledgeFullBackupOrRestore(int token, boolean allow,
+       in String curPassword, in String encryptionPassword,
+       IFullBackupRestoreObserver observer);
+16: String getCurrentTransport();
+17: String[] listAllTransports();
+18: String selectBackupTransport(String transport);
+19: Intent getConfigurationIntent(String transport);
+20: String getDestinationString(String transport);
+21: IRestoreSession beginRestoreSession(String packageName, String transportID);
+22: void opComplete(int token);
+IRestoreSession:
+1: int getAvailableRestoreSets(IRestoreObserver observer);
+2: int restoreAll(long token, IRestoreObserver observer);
+3: int restoreSome(long token, IRestoreObserver observer, in String[] packages);
+4: int restorePackage(in String packageName, IRestoreObserver observer);
+5: void endRestoreSession();
+IFullBackupRestoreObserver:
+1: void onStartBackup();
+2: void onBackupPackage(String name);
+3: void onEndBackup();
+4: void onStartRestore();
+5: void onRestorePackage(String name);
+6: void onEndRestore();
+7: void onTimeout();
+IRestoreObserver:
+1: void restoreSetsAvailable(in RestoreSet[] result);
+2: void restoreStarting(int numPackages);
+3: void onUpdate(int nowBeingRestored, String curentPackage);
+4: void restoreFinished(int error);
+IRecognitionService:
+1: void startListening(in Intent recognizerIntent, in IRecognitionListener listener);
+2: void stopListening(in IRecognitionListener listener);
+3: void cancel(in IRecognitionListener listener);
+IRecognitionListener:
+1: void onReadyForSpeech(in Bundle params);
+2: void onBeginningOfSpeech();
+3: void onRmsChanged(in float rmsdB);
+4: void onBufferReceived(in byte[] buffer);
+5: void onEndOfSpeech();
+6: void onError(in int error);
+7: void onResults(in Bundle results);
+8: void onPartialResults(in Bundle results);
+9: void onEvent(in int eventType, in Bundle params);
+ITextToSpeechCallback:
+1: void onStart(String utteranceId);
+2: void onDone(String utteranceId);
+3: void onError(String utteranceId);
+ITextToSpeechService:
+1: int speak(in IBinder callingInstance, in String text, in int queueMode, in Bundle params);
+2: int synthesizeToFile(in IBinder callingInstance, in String text,
+       in String filename, in Bundle params);
+3: param audioUri URI for the audio resource (a file or android.resource URI)
+       param queueMode Determines what to do to requests already in the queue.
+       param param Request parameters.
+              int playAudio(in IBinder callingInstance, in Uri audioUri, in int queueMode, in Bundle params);
+4: int playSilence(in IBinder callingInstance, in long duration, in int queueMode, in Bundle params);
+5: boolean isSpeaking();
+6: Interrupts the current utterance (if from the given app) and removes any utterances
+       in the queue that are from the given app.
+              param callingInstance a binder representing the identity of the calling
+       TextToSpeech object.
+              int stop(in IBinder callingInstance);
+7: return A 3-element array, containing language (ISO 3-letter code),
+       country (ISO 3-letter code) and variant used by the engine.
+7: country (ISO 3-letter code) and variant used by the engine.
+       The country and variant may be {@code ""}. If country is empty, then variant must
+       be empty too.
+              String[] getLanguage();
+8: int isLanguageAvailable(in String lang, in String country, in String variant);
+9: String[] getFeaturesForLanguage(in String lang, in String country, in String variant);
+10: int loadLanguage(in String lang, in String country, in String variant);
+11: void setCallback(in IBinder caller, ITextToSpeechCallback cb);
+IAccessibilityServiceConnection:
+1: void setServiceInfo(in AccessibilityServiceInfo info);
+2: float findAccessibilityNodeInfoByAccessibilityId(int accessibilityWindowId,
+       long accessibilityNodeId, int interactionId,
+       IAccessibilityInteractionConnectionCallback callback, int flags, long threadId);
+3: float findAccessibilityNodeInfosByText(int accessibilityWindowId, long accessibilityNodeId,
+       String text, int interactionId, IAccessibilityInteractionConnectionCallback callback,
+       long threadId);
+4: float findAccessibilityNodeInfoByViewId(int accessibilityWindowId, long accessibilityNodeId,
+       int viewId, int interactionId, IAccessibilityInteractionConnectionCallback callback,
+       long threadId);
+5: float findFocus(int accessibilityWindowId, long accessibilityNodeId, int focusType,
+       int interactionId, IAccessibilityInteractionConnectionCallback callback, long threadId);
+6: float focusSearch(int accessibilityWindowId, long accessibilityNodeId, int direction,
+       int interactionId, IAccessibilityInteractionConnectionCallback callback, long threadId);
+7: boolean performAccessibilityAction(int accessibilityWindowId, long accessibilityNodeId,
+       int action, in Bundle arguments, int interactionId,
+       IAccessibilityInteractionConnectionCallback callback, long threadId);
+8: AccessibilityServiceInfo getServiceInfo();
+9: boolean performGlobalAction(int action);
+IAccessibilityServiceClient:
+1: void setConnection(in IAccessibilityServiceConnection connection, int connectionId);
+2: void onAccessibilityEvent(in AccessibilityEvent event);
+3: void onInterrupt();
+4: void onGesture(int gesture);
+ISerialManager:
+1: String[] getSerialPorts();
+2: ParcelFileDescriptor openSerialPort(String name);
+IUsbManager:
+1: void getDeviceList(out Bundle devices);
+2: ParcelFileDescriptor openDevice(String deviceName);
+3: UsbAccessory getCurrentAccessory();
+4: ParcelFileDescriptor openAccessory(in UsbAccessory accessory);
+5: or clears it if the package name is null)
+              void setDevicePackage(in UsbDevice device, String packageName, int userId);
+6: or clears it if the package name is null)
+              void setAccessoryPackage(in UsbAccessory accessory, String packageName, int userId);
+7: boolean hasDevicePermission(in UsbDevice device);
+8: boolean hasAccessoryPermission(in UsbAccessory accessory);
+9: void requestDevicePermission(in UsbDevice device, String packageName, in PendingIntent pi);
+10: void requestAccessoryPermission(in UsbAccessory accessory, String packageName,
+       in PendingIntent pi);
+11: void grantDevicePermission(in UsbDevice device, int uid);
+12: void grantAccessoryPermission(in UsbAccessory accessory, int uid);
+13: boolean hasDefaults(String packageName, int userId);
+14: void clearDefaults(String packageName, int userId);
+15: void setCurrentFunction(String function, boolean makeDefault);
+16: void setMassStorageBackingFile(String path);
+17: void allowUsbDebugging(boolean alwaysAllow, String publicKey);
+18: void denyUsbDebugging();
+IInputManager:
+1: InputDevice getInputDevice(int deviceId);
+2: int[] getInputDeviceIds();
+3: boolean hasKeys(int deviceId, int sourceMask, in int[] keyCodes, out boolean[] keyExists);
+4: void tryPointerSpeed(int speed);
+5: boolean injectInputEvent(in InputEvent ev, int mode);
+6: KeyboardLayout[] getKeyboardLayouts();
+7: KeyboardLayout getKeyboardLayout(String keyboardLayoutDescriptor);
+8: String getCurrentKeyboardLayoutForInputDevice(String inputDeviceDescriptor);
+9: void setCurrentKeyboardLayoutForInputDevice(String inputDeviceDescriptor,
+       String keyboardLayoutDescriptor);
+10: String[] getKeyboardLayoutsForInputDevice(String inputDeviceDescriptor);
+11: void addKeyboardLayoutForInputDevice(String inputDeviceDescriptor,
+       String keyboardLayoutDescriptor);
+12: void removeKeyboardLayoutForInputDevice(String inputDeviceDescriptor,
+       String keyboardLayoutDescriptor);
+13: void registerInputDevicesChangedListener(IInputDevicesChangedListener listener);
+14: void vibrate(int deviceId, in long[] pattern, int repeat, IBinder token);
+15: void cancelVibrate(int deviceId, IBinder token);
+IInputDevicesChangedListener:
+1: oneway void onInputDevicesChanged(in int[] deviceIdAndGeneration);
+IDisplayManager:
+1: DisplayInfo getDisplayInfo(int displayId);
+2: int[] getDisplayIds();
+3: void registerCallback(in IDisplayManagerCallback callback);
+4: void scanWifiDisplays();
+5: void connectWifiDisplay(String address);
+6: void disconnectWifiDisplay();
+7: void renameWifiDisplay(String address, String alias);
+8: void forgetWifiDisplay(String address);
+9: WifiDisplayStatus getWifiDisplayStatus();
+IDisplayManagerCallback:
+1: oneway void onDisplayEvent(int displayId, int event);
+IThrottleManager:
+1: long getByteCount(String iface, int dir, int period, int ago);
+2: int getThrottle(String iface);
+3: long getResetTime(String iface);
+4: long getPeriodStartTime(String iface);
+5: long getCliffThreshold(String iface, int cliff);
+6: int getCliffLevel(String iface, int cliff);
+7: String getHelpUri();
+INetworkPolicyManager:
+1: void setUidPolicy(int uid, int policy);
+2: int getUidPolicy(int uid);
+3: int[] getUidsWithPolicy(int policy);
+4: boolean isUidForeground(int uid);
+5: void registerListener(INetworkPolicyListener listener);
+6: void unregisterListener(INetworkPolicyListener listener);
+7: void setNetworkPolicies(in NetworkPolicy[] policies);
+8: NetworkPolicy[] getNetworkPolicies();
+9: void snoozeLimit(in NetworkTemplate template);
+10: void setRestrictBackground(boolean restrictBackground);
+11: boolean getRestrictBackground();
+12: NetworkQuotaInfo getNetworkQuotaInfo(in NetworkState state);
+13: boolean isNetworkMetered(in NetworkState state);
+IConnectivityManager:
+1: void setNetworkPreference(int pref);
+2: int getNetworkPreference();
+3: NetworkInfo getActiveNetworkInfo();
+4: NetworkInfo getActiveNetworkInfoForUid(int uid);
+5: NetworkInfo getNetworkInfo(int networkType);
+6: NetworkInfo[] getAllNetworkInfo();
+7: boolean isNetworkSupported(int networkType);
+8: LinkProperties getActiveLinkProperties();
+9: LinkProperties getLinkProperties(int networkType);
+10: NetworkState[] getAllNetworkState();
+11: NetworkQuotaInfo getActiveNetworkQuotaInfo();
+12: boolean isActiveNetworkMetered();
+13: boolean setRadios(boolean onOff);
+14: boolean setRadio(int networkType, boolean turnOn);
+15: int startUsingNetworkFeature(int networkType, in String feature,
+       in IBinder binder);
+16: int stopUsingNetworkFeature(int networkType, in String feature);
+17: boolean requestRouteToHost(int networkType, int hostAddress);
+18: boolean requestRouteToHostAddress(int networkType, in byte[] hostAddress);
+19: boolean getMobileDataEnabled();
+20: void setMobileDataEnabled(boolean enabled);
+21: void setPolicyDataEnable(int networkType, boolean enabled);
+22: int tether(String iface);
+23: int untether(String iface);
+24: int getLastTetherError(String iface);
+25: boolean isTetheringSupported();
+26: String[] getTetherableIfaces();
+27: String[] getTetheredIfaces();
+28: String[] getTetheredIfacePairs();
+29: String[] getTetheringErroredIfaces();
+30: String[] getTetherableUsbRegexs();
+31: String[] getTetherableWifiRegexs();
+32: String[] getTetherableBluetoothRegexs();
+33: int setUsbTethering(boolean enable);
+34: void requestNetworkTransitionWakelock(in String forWhom);
+35: void reportInetCondition(int networkType, int percentage);
+36: ProxyProperties getGlobalProxy();
+37: void setGlobalProxy(in ProxyProperties p);
+38: ProxyProperties getProxy();
+39: void setDataDependency(int networkType, boolean met);
+40: boolean protectVpn(in ParcelFileDescriptor socket);
+41: boolean prepareVpn(String oldPackage, String newPackage);
+42: ParcelFileDescriptor establishVpn(in VpnConfig config);
+43: void startLegacyVpn(in VpnProfile profile);
+44: LegacyVpnInfo getLegacyVpnInfo();
+45: boolean updateLockdownVpn();
+46: void captivePortalCheckComplete(in NetworkInfo info);
+INetworkPolicyListener:
+1: void onUidRulesChanged(int uid, int uidRules);
+2: void onMeteredIfacesChanged(in String[] meteredIfaces);
+3: void onRestrictBackgroundChanged(boolean restrictBackground);
+INetworkStatsSession:
+1: NetworkStats getSummaryForNetwork(in NetworkTemplate template, long start, long end);
+2: NetworkStatsHistory getHistoryForNetwork(in NetworkTemplate template, int fields);
+3: NetworkStats getSummaryForAllUid(in NetworkTemplate template, long start, long end, boolean includeTags);
+4: NetworkStatsHistory getHistoryForUid(in NetworkTemplate template, int uid, int set, int tag, int fields);
+5: void close();
+INetworkStatsService:
+1: INetworkStatsSession openSession();
+2: long getNetworkTotalBytes(in NetworkTemplate template, long start, long end);
+3: NetworkStats getDataLayerSnapshotForUid(int uid);
+4: String[] getMobileIfaces();
+5: void incrementOperationCount(int uid, int tag, int operationCount);
+6: void setUidForeground(int uid, boolean uidForeground);
+7: void forceUpdate();
+8: void advisePersistThreshold(long thresholdBytes);
+INetworkManagementEventObserver:
+1: void interfaceStatusChanged(String iface, boolean up);
+2: void interfaceLinkStateChanged(String iface, boolean up);
+3: void interfaceAdded(String iface);
+4: void interfaceRemoved(String iface);
+5: void limitReached(String limitName, String iface);
+6: void interfaceClassDataActivityChanged(String label, boolean active);
+INsdManager:
+1: Messenger getMessenger();
+2: void setEnabled(boolean enable);
+IInputFilter:
+1: void install(IInputFilterHost host);
+2: void uninstall();
+3: void filterInputEvent(in InputEvent event, int policyFlags);
+IInputFilterHost:
+1: void sendInputEvent(in InputEvent event, int policyFlags);
+IDisplayContentChangeListener:
+1: void onWindowTransition(int displayId, int transition, in WindowInfo info);
+2: void onRectangleOnScreenRequested(int displayId, in Rect rectangle, boolean immediate);
+3: void onWindowLayersChanged(int displayId);
+4: void onRotationChanged(int rotation);
+IWindowSession:
+1: int add(IWindow window, int seq, in WindowManager.LayoutParams attrs,
+       in int viewVisibility, out Rect outContentInsets,
+       out InputChannel outInputChannel);
+2: int addToDisplay(IWindow window, int seq, in WindowManager.LayoutParams attrs,
+       in int viewVisibility, in int layerStackId, out Rect outContentInsets,
+       out InputChannel outInputChannel);
+3: int addWithoutInputChannel(IWindow window, int seq, in WindowManager.LayoutParams attrs,
+       in int viewVisibility, out Rect outContentInsets);
+4: int addToDisplayWithoutInputChannel(IWindow window, int seq, in WindowManager.LayoutParams attrs,
+       in int viewVisibility, in int layerStackId, out Rect outContentInsets);
+5: void remove(IWindow window);
+6: new parameters, it returns the new frame of the window on screen (the
+       position should be ignored) and surface of the window.  The surface
+       will be invalid if the window is currently hidden, else you can use it
+       to draw the window's contents.
+              param window The window being modified.
+       param seq Ordering sequence number.
+       param attrs If non-null, new attributes to apply to the window.
+       param requestedWidth The width the window wants to be.
+       param requestedHeight The height the window wants to be.
+       param viewVisibility Window root view's visibility.
+       param flags Request flags: {@link WindowManagerGlobal#RELAYOUT_INSETS_PENDING},
+       link WindowManagerGlobal#RELAYOUT_DEFER_SURFACE_DESTROY}.
+       param outFrame Rect in which is placed the new position/size on
+       screen.
+       param outContentInsets Rect in which is placed the offsets from
+       var>outFrame</var> in which the content of the window should be
+       placed.  This can be used to modify the window layout to ensure its
+       contents are visible to the user, taking into account system windows
+       like the status bar or a soft keyboard.
+       param outVisibleInsets Rect in which is placed the offsets from
+       var>outFrame</var> in which the window is actually completely visible
+       to the user.  This can be used to temporarily scroll the window's
+       contents to make sure the user can see it.  This is different than
+       var>outContentInsets</var> in that these insets change transiently,
+       so complex relayout of the window should not happen based on them.
+       param outConfiguration New configuration of window, if it is now
+       becoming visible and the global configuration has changed since it
+       was last displayed.
+       param outSurface Object in which is placed the new display surface.
+              return int Result flags: {@link WindowManagerGlobal#RELAYOUT_SHOW_FOCUS},
+       link WindowManagerGlobal#RELAYOUT_FIRST_TIME}.
+              int relayout(IWindow window, int seq, in WindowManager.LayoutParams attrs,
+6: int relayout(IWindow window, int seq, in WindowManager.LayoutParams attrs,
+       int requestedWidth, int requestedHeight, int viewVisibility,
+       int flags, out Rect outFrame,
+       out Rect outContentInsets, out Rect outVisibleInsets,
+       out Configuration outConfig, out Surface outSurface);
+7: void performDeferredDestroy(IWindow window);
+8: boolean outOfMemory(IWindow window);
+9: void setTransparentRegion(IWindow window, in Region region);
+10: void setInsets(IWindow window, int touchableInsets, in Rect contentInsets,
+       in Rect visibleInsets, in Region touchableRegion);
+11: void getDisplayFrame(IWindow window, out Rect outDisplayFrame);
+12: void finishDrawing(IWindow window);
+13: void setInTouchMode(boolean showFocus);
+14: boolean getInTouchMode();
+15: boolean performHapticFeedback(IWindow window, int effectId, boolean always);
+16: IBinder prepareDrag(IWindow window, int flags,
+       int thumbnailWidth, int thumbnailHeight, out Surface outSurface);
+17: boolean performDrag(IWindow window, IBinder dragToken, float touchX, float touchY,
+       float thumbCenterX, float thumbCenterY, in ClipData data);
+18: void reportDropResult(IWindow window, boolean consumed);
+19: void dragRecipientEntered(IWindow window);
+20: void dragRecipientExited(IWindow window);
+21: void setWallpaperPosition(IBinder windowToken, float x, float y, float xstep, float ystep);
+22: void wallpaperOffsetsComplete(IBinder window);
+23: Bundle sendWallpaperCommand(IBinder window, String action, int x, int y,
+       int z, in Bundle extras, boolean sync);
+24: void wallpaperCommandComplete(IBinder window, in Bundle result);
+25: void setUniverseTransform(IBinder window, float alpha, float offx, float offy,
+       float dsdx, float dtdx, float dsdy, float dtdy);
+26: void onRectangleOnScreenRequested(IBinder token, in Rect rectangle, boolean immediate);
+IWindow:
+1: void executeCommand(String command, String parameters, in ParcelFileDescriptor descriptor);
+2: void resized(in Rect frame, in Rect contentInsets,
+       in Rect visibleInsets, boolean reportDraw, in Configuration newConfig);
+3: void moved(int newX, int newY);
+4: void dispatchAppVisibility(boolean visible);
+5: void dispatchGetNewSurface();
+6: void dispatchScreenState(boolean on);
+7: to date on the current state showing navigational focus (touch mode) too.
+              void windowFocusChanged(boolean hasFocus, boolean inTouchMode);
+8: void closeSystemDialogs(String reason);
+9: void dispatchWallpaperOffsets(float x, float y, float xStep, float yStep, boolean sync);
+10: void dispatchWallpaperCommand(String action, int x, int y,
+       int z, in Bundle extras, boolean sync);
+11: void dispatchDragEvent(in DragEvent event);
+12: void dispatchSystemUiVisibilityChanged(int seq, int globalVisibility,
+       int localValue, int localChanges);
+13: void doneAnimating();
+IApplicationToken:
+1: void windowsDrawn();
+2: void windowsVisible();
+3: void windowsGone();
+4: boolean keyDispatchingTimedOut();
+5: long getKeyDispatchingTimeout();
+IOnKeyguardExitResult:
+1: void onKeyguardExitResult(boolean success);
+IWindowManager:
+1: boolean startViewServer(int port);   // Transaction #1
+       boolean stopViewServer();            // Transaction #2
+       boolean isViewServerRunning();       // Transaction #3
+              IWindowSession openSession(in IInputMethodClient client,
+1: IWindowSession openSession(in IInputMethodClient client,
+       in IInputContext inputContext);
+2: boolean inputMethodClientHasFocus(IInputMethodClient client);
+3: void setForcedDisplaySize(int displayId, int width, int height);
+4: void clearForcedDisplaySize(int displayId);
+5: void setForcedDisplayDensity(int displayId, int density);
+6: void clearForcedDisplayDensity(int displayId);
+7: boolean hasSystemNavBar();
+8: void pauseKeyDispatching(IBinder token);
+9: void resumeKeyDispatching(IBinder token);
+10: void setEventDispatching(boolean enabled);
+11: void addWindowToken(IBinder token, int type);
+12: void removeWindowToken(IBinder token);
+13: void addAppToken(int addPos, IApplicationToken token,
+       int groupId, int requestedOrientation, boolean fullscreen, boolean showWhenLocked);
+14: void setAppGroupId(IBinder token, int groupId);
+15: void setAppOrientation(IApplicationToken token, int requestedOrientation);
+16: int getAppOrientation(IApplicationToken token);
+17: void setFocusedApp(IBinder token, boolean moveFocusNow);
+18: void prepareAppTransition(int transit, boolean alwaysKeepCurrent);
+19: int getPendingAppTransition();
+20: void overridePendingAppTransition(String packageName, int enterAnim, int exitAnim,
+       IRemoteCallback startedCallback);
+21: void overridePendingAppTransitionScaleUp(int startX, int startY, int startWidth,
+       int startHeight);
+22: void overridePendingAppTransitionThumb(in Bitmap srcThumb, int startX, int startY,
+       IRemoteCallback startedCallback, boolean scaleUp);
+23: void executeAppTransition();
+24: void setAppStartingWindow(IBinder token, String pkg, int theme,
+       in CompatibilityInfo compatInfo, CharSequence nonLocalizedLabel, int labelRes,
+       int icon, int windowFlags, IBinder transferFrom, boolean createIfNeeded);
+25: void setAppWillBeHidden(IBinder token);
+26: void setAppVisibility(IBinder token, boolean visible);
+27: void startAppFreezingScreen(IBinder token, int configChanges);
+28: void stopAppFreezingScreen(IBinder token, boolean force);
+29: void removeAppToken(IBinder token);
+30: void moveAppToken(int index, IBinder token);
+31: void moveAppTokensToTop(in List<IBinder> tokens);
+32: void moveAppTokensToBottom(in List<IBinder> tokens);
+33: Configuration updateOrientationFromAppTokens(in Configuration currentConfig,
+       IBinder freezeThisOneIfNeeded);
+34: void setNewConfiguration(in Configuration config);
+35: void startFreezingScreen(int exitAnim, int enterAnim);
+36: void stopFreezingScreen();
+37: void disableKeyguard(IBinder token, String tag);
+38: void reenableKeyguard(IBinder token);
+39: void exitKeyguardSecurely(IOnKeyguardExitResult callback);
+40: boolean isKeyguardLocked();
+41: boolean isKeyguardSecure();
+42: boolean inKeyguardRestrictedInputMode();
+43: void dismissKeyguard();
+44: void closeSystemDialogs(String reason);
+45: float getAnimationScale(int which);
+46: float[] getAnimationScales();
+47: void setAnimationScale(int which, float scale);
+48: void setAnimationScales(in float[] scales);
+49: void setInTouchMode(boolean showFocus);
+50: actually be shown.  (it will be ignored that pid doesn't have windows
+       on screen)
+       void showStrictModeViolation(boolean on);
+51: the system default (differs per build variant) or any valid
+       boolean string as parsed by SystemProperties.getBoolean().
+       void setStrictModeVisualIndicatorPreference(String enabled);
+52: void updateRotation(boolean alwaysSendConfiguration, boolean forceRelayout);
+53: int getRotation();
+54: int watchRotation(IRotationWatcher watcher);
+55: int getPreferredOptionsPanelGravity();
+56: void freezeRotation(int rotation);
+57: void thawRotation();
+58: Bitmap screenshotApplications(IBinder appToken, int displayId, int maxWidth, int maxHeight);
+59: void statusBarVisibilityChanged(int visibility);
+60: boolean waitForWindowDrawn(IBinder token, in IRemoteCallback callback);
+61: Device has a software navigation bar (separate from the status bar).
+              boolean hasNavigationBar();
+62: Lock the device immediately with the specified options (can be null).
+              void lockNow(in Bundle options);
+63: IBinder getFocusedWindowToken();
+64: float getWindowCompatibilityScale(IBinder windowToken);
+65: void setInputFilter(in IInputFilter filter);
+66: void magnifyDisplay(int dipslayId, float scale, float offsetX, float offsetY);
+67: void addDisplayContentChangeListener(int displayId, IDisplayContentChangeListener listener);
+68: void removeDisplayContentChangeListener(int displayId, IDisplayContentChangeListener listener);
+69: WindowInfo getWindowInfo(IBinder token);
+70: void getVisibleWindowsForDisplay(int displayId, out List<WindowInfo> outInfos);
+71: boolean isSafeModeEnabled();
+72: void showAssistant();
+IRotationWatcher:
+1: void onRotationChanged(int rotation);
+IAccessibilityManager:
+1: int addClient(IAccessibilityManagerClient client, int userId);
+2: boolean sendAccessibilityEvent(in AccessibilityEvent uiEvent, int userId);
+3: List<AccessibilityServiceInfo> getInstalledAccessibilityServiceList(int userId);
+4: List<AccessibilityServiceInfo> getEnabledAccessibilityServiceList(int feedbackType, int userId);
+5: void interrupt(int userId);
+6: int addAccessibilityInteractionConnection(IWindow windowToken,
+       in IAccessibilityInteractionConnection connection, int userId);
+7: void removeAccessibilityInteractionConnection(IWindow windowToken);
+8: void registerUiTestAutomationService(IAccessibilityServiceClient client,
+       in AccessibilityServiceInfo info);
+9: void unregisterUiTestAutomationService(IAccessibilityServiceClient client);
+10: void temporaryEnableAccessibilityStateUntilKeyguardRemoved(in ComponentName service,
+       boolean touchExplorationEnabled);
+IAccessibilityManagerClient:
+1: void setState(int stateFlags);
+IAccessibilityInteractionConnection:
+1: void findAccessibilityNodeInfoByAccessibilityId(long accessibilityNodeId, int interactionId,
+       IAccessibilityInteractionConnectionCallback callback, int flags, int interrogatingPid,
+       long interrogatingTid);
+2: void findAccessibilityNodeInfoByViewId(long accessibilityNodeId, int viewId, int interactionId,
+       IAccessibilityInteractionConnectionCallback callback, int flags, int interrogatingPid,
+       long interrogatingTid);
+3: void findAccessibilityNodeInfosByText(long accessibilityNodeId, String text, int interactionId,
+       IAccessibilityInteractionConnectionCallback callback, int flags, int interrogatingPid,
+       long interrogatingTid);
+4: void findFocus(long accessibilityNodeId, int focusType, int interactionId,
+       IAccessibilityInteractionConnectionCallback callback, int flags, int interrogatingPid,
+       long interrogatingTid);
+5: void focusSearch(long accessibilityNodeId, int direction, int interactionId,
+       IAccessibilityInteractionConnectionCallback callback, int flags, int interrogatingPid,
+       long interrogatingTid);
+6: void performAccessibilityAction(long accessibilityNodeId, int action, in Bundle arguments,
+       int interactionId, IAccessibilityInteractionConnectionCallback callback, int flags,
+       int interrogatingPid, long interrogatingTid);
+IAccessibilityInteractionCallback:
+1: void setFindAccessibilityNodeInfoResult(in AccessibilityNodeInfo info, int interactionId);
+2: void setFindAccessibilityNodeInfosResult(in List<AccessibilityNodeInfo> infos,
+       int interactionId);
+3: void setPerformAccessibilityActionResult(boolean succeeded, int interactionId);
+IAccessibilityInteractionConnectionCallback:
+1: void setFindAccessibilityNodeInfoResult(in AccessibilityNodeInfo info, int interactionId);
+2: void setFindAccessibilityNodeInfosResult(in List<AccessibilityNodeInfo> infos,
+       int interactionId);
+3: void setPerformAccessibilityActionResult(boolean succeeded, int interactionId);
+IBluetoothInputDevice:
+1: boolean connect(in BluetoothDevice device);
+2: boolean disconnect(in BluetoothDevice device);
+3: List<BluetoothDevice> getConnectedDevices();
+4: List<BluetoothDevice> getDevicesMatchingConnectionStates(in int[] states);
+5: int getConnectionState(in BluetoothDevice device);
+6: boolean setPriority(in BluetoothDevice device, int priority);
+7: int getPriority(in BluetoothDevice device);
+8: boolean getProtocolMode(in BluetoothDevice device);
+9: boolean virtualUnplug(in BluetoothDevice device);
+10: boolean setProtocolMode(in BluetoothDevice device, int protocolMode);
+11: boolean getReport(in BluetoothDevice device, byte reportType, byte reportId, int bufferSize);
+12: boolean setReport(in BluetoothDevice device, byte reportType, String report);
+13: boolean sendData(in BluetoothDevice device, String report);
+IBluetoothManager:
+1: IBluetooth registerAdapter(in IBluetoothManagerCallback callback);
+2: void unregisterAdapter(in IBluetoothManagerCallback callback);
+3: void registerStateChangeCallback(in IBluetoothStateChangeCallback callback);
+4: void unregisterStateChangeCallback(in IBluetoothStateChangeCallback callback);
+5: boolean isEnabled();
+6: boolean enable();
+7: boolean enableNoAutoConnect();
+8: boolean disable(boolean persist);
+9: String getAddress();
+10: String getName();
+IBluetoothManagerCallback:
+1: void onBluetoothServiceUp(in IBluetooth bluetoothService);
+2: void onBluetoothServiceDown();
+IBluetoothHeadset:
+1: boolean connect(in BluetoothDevice device);
+2: boolean disconnect(in BluetoothDevice device);
+3: List<BluetoothDevice> getConnectedDevices();
+4: List<BluetoothDevice> getDevicesMatchingConnectionStates(in int[] states);
+5: int getConnectionState(in BluetoothDevice device);
+6: boolean setPriority(in BluetoothDevice device, int priority);
+7: int getPriority(in BluetoothDevice device);
+8: boolean startVoiceRecognition(in BluetoothDevice device);
+9: boolean stopVoiceRecognition(in BluetoothDevice device);
+10: boolean isAudioConnected(in BluetoothDevice device);
+11: int getBatteryUsageHint(in BluetoothDevice device);
+12: boolean acceptIncomingConnect(in BluetoothDevice device);
+13: boolean rejectIncomingConnect(in BluetoothDevice device);
+14: int getAudioState(in BluetoothDevice device);
+15: boolean isAudioOn();
+16: boolean connectAudio();
+17: boolean disconnectAudio();
+18: boolean startScoUsingVirtualVoiceCall(in BluetoothDevice device);
+19: boolean stopScoUsingVirtualVoiceCall(in BluetoothDevice device);
+20: void phoneStateChanged(int numActive, int numHeld, int callState, String number, int type);
+21: void roamChanged(boolean roam);
+22: void clccResponse(int index, int direction, int status, int mode, boolean mpty,
+       String number, int type);
+IBluetooth:
+1: boolean isEnabled();
+2: int getState();
+3: boolean enable();
+4: boolean enableNoAutoConnect();
+5: boolean disable();
+6: String getAddress();
+7: ParcelUuid[] getUuids();
+8: boolean setName(in String name);
+9: String getName();
+10: int getScanMode();
+11: boolean setScanMode(int mode, int duration);
+12: int getDiscoverableTimeout();
+13: boolean setDiscoverableTimeout(int timeout);
+14: boolean startDiscovery();
+15: boolean cancelDiscovery();
+16: boolean isDiscovering();
+17: int getAdapterConnectionState();
+18: int getProfileConnectionState(int profile);
+19: BluetoothDevice[] getBondedDevices();
+20: boolean createBond(in BluetoothDevice device);
+21: boolean cancelBondProcess(in BluetoothDevice device);
+22: boolean removeBond(in BluetoothDevice device);
+23: int getBondState(in BluetoothDevice device);
+24: String getRemoteName(in BluetoothDevice device);
+25: String getRemoteAlias(in BluetoothDevice device);
+26: boolean setRemoteAlias(in BluetoothDevice device, in String name);
+27: int getRemoteClass(in BluetoothDevice device);
+28: ParcelUuid[] getRemoteUuids(in BluetoothDevice device);
+29: boolean fetchRemoteUuids(in BluetoothDevice device);
+30: boolean setPin(in BluetoothDevice device, boolean accept, int len, in byte[] pinCode);
+31: boolean setPasskey(in BluetoothDevice device, boolean accept, int len, in byte[]
+       passkey);
+32: boolean setPairingConfirmation(in BluetoothDevice device, boolean accept);
+33: void sendConnectionStateChange(in BluetoothDevice device, int profile, int state, int prevState);
+34: void registerCallback(in IBluetoothCallback callback);
+35: void unregisterCallback(in IBluetoothCallback callback);
+36: ParcelFileDescriptor connectSocket(in BluetoothDevice device, int type, in ParcelUuid uuid, int port, int flag);
+37: ParcelFileDescriptor createSocketChannel(int type, in String serviceName, in ParcelUuid uuid, int port, int flag);
+IBluetoothHealthCallback:
+1: void onHealthAppConfigurationStatusChange(in BluetoothHealthAppConfiguration config, int status);
+2: void onHealthChannelStateChange(in BluetoothHealthAppConfiguration config,
+       in BluetoothDevice device, int prevState, int newState, in
+       ParcelFileDescriptor fd, int id);
+IBluetoothHeadsetPhone:
+1: boolean answerCall();
+2: boolean hangupCall();
+3: boolean sendDtmf(int dtmf);
+4: boolean processChld(int chld);
+5: String getNetworkOperator();
+6: String getSubscriberNumber();
+7: boolean listCurrentCalls();
+8: boolean queryPhoneState();
+9: void updateBtHandsfreeAfterRadioTechnologyChange();
+10: void cdmaSwapSecondCallState();
+11: void cdmaSetSecondCallState(boolean state);
+IBluetoothPan:
+1: boolean isTetheringOn();
+2: void setBluetoothTethering(boolean value);
+3: boolean connect(in BluetoothDevice device);
+4: boolean disconnect(in BluetoothDevice device);
+5: List<BluetoothDevice> getConnectedDevices();
+6: List<BluetoothDevice> getDevicesMatchingConnectionStates(in int[] states);
+7: int getConnectionState(in BluetoothDevice device);
+IBluetoothStateChangeCallback:
+1: void onBluetoothStateChange(boolean on);
+IBluetoothCallback:
+1: void onRfcommChannelFound(int channel);
+2: void onBluetoothStateChange(int prevState, int newState);
+IBluetoothA2dp:
+1: boolean connect(in BluetoothDevice device);
+2: boolean disconnect(in BluetoothDevice device);
+3: List<BluetoothDevice> getConnectedDevices();
+4: List<BluetoothDevice> getDevicesMatchingConnectionStates(in int[] states);
+5: int getConnectionState(in BluetoothDevice device);
+6: boolean setPriority(in BluetoothDevice device, int priority);
+7: int getPriority(in BluetoothDevice device);
+8: boolean isA2dpPlaying(in BluetoothDevice device);
+IBluetoothPbap:
+1: int getState();
+2: BluetoothDevice getClient();
+3: boolean connect(in BluetoothDevice device);
+4: void disconnect();
+5: boolean isConnected(in BluetoothDevice device);
+IBluetoothHealth:
+1: boolean registerAppConfiguration(in BluetoothHealthAppConfiguration config,
+       in IBluetoothHealthCallback callback);
+2: boolean unregisterAppConfiguration(in BluetoothHealthAppConfiguration config);
+3: boolean connectChannelToSource(in BluetoothDevice device, in BluetoothHealthAppConfiguration config);
+4: boolean connectChannelToSink(in BluetoothDevice device, in BluetoothHealthAppConfiguration config,
+       int channelType);
+5: boolean disconnectChannel(in BluetoothDevice device, in BluetoothHealthAppConfiguration config, int id);
+6: ParcelFileDescriptor getMainChannelFd(in BluetoothDevice device, in BluetoothHealthAppConfiguration config);
+7: List<BluetoothDevice> getConnectedHealthDevices();
+8: List<BluetoothDevice> getHealthDevicesMatchingConnectionStates(in int[] states);
+9: int getHealthDeviceConnectionState(in BluetoothDevice device);
+IUserManager:
+1: UserInfo createUser(in String name, int flags);
+2: boolean removeUser(int userHandle);
+3: void setUserName(int userHandle, String name);
+4: void setUserIcon(int userHandle, in Bitmap icon);
+5: Bitmap getUserIcon(int userHandle);
+6: List<UserInfo> getUsers(boolean excludeDying);
+7: UserInfo getUserInfo(int userHandle);
+8: void setGuestEnabled(boolean enable);
+9: boolean isGuestEnabled();
+10: void wipeUser(int userHandle);
+11: int getUserSerialNumber(int userHandle);
+12: int getUserHandle(int userSerialNumber);
+IHardwareService:
+1: boolean getFlashlightEnabled();
+2: void setFlashlightEnabled(boolean on);
+IVibratorService:
+1: boolean hasVibrator();
+2: void vibrate(long milliseconds, IBinder token);
+3: void vibratePattern(in long[] pattern, int repeat, IBinder token);
+4: void cancelVibrate(IBinder token);
+IPermissionController:
+1: boolean checkPermission(String permission, int pid, int uid);
+IRemoteCallback:
+1: void sendResult(in Bundle data);
+IMessenger:
+1: void send(in Message msg);
+ISchedulingPolicyService:
+1: int requestPriority(int pid, int tid, int prio);
+IPowerManager:
+1: void acquireWakeLock(IBinder lock, int flags, String tag, in WorkSource ws);
+2: void releaseWakeLock(IBinder lock, int flags);
+3: void updateWakeLockWorkSource(IBinder lock, in WorkSource ws);
+4: boolean isWakeLockLevelSupported(int level);
+5: void userActivity(long time, int event, int flags);
+6: void wakeUp(long time);
+7: void goToSleep(long time, int reason);
+8: void nap(long time);
+9: boolean isScreenOn();
+10: void reboot(boolean confirm, String reason, boolean wait);
+11: void shutdown(boolean confirm, boolean wait);
+12: void crash(String message);
+13: void setStayOnSetting(int val);
+14: void setMaximumScreenOffTimeoutFromDeviceAdmin(int timeMs);
+15: void setTemporaryScreenBrightnessSettingOverride(int brightness);
+16: void setTemporaryScreenAutoBrightnessAdjustmentSettingOverride(float adj);
+17: sets the attention light (used by phone app only)
+       void setAttentionLight(boolean on, int color);
+INetworkManagementService:
+1: void registerObserver(INetworkManagementEventObserver obs);
+2: void unregisterObserver(INetworkManagementEventObserver obs);
+3: String[] listInterfaces();
+4: InterfaceConfiguration getInterfaceConfig(String iface);
+5: void setInterfaceConfig(String iface, in InterfaceConfiguration cfg);
+6: void clearInterfaceAddresses(String iface);
+7: void setInterfaceDown(String iface);
+8: void setInterfaceUp(String iface);
+9: void setInterfaceIpv6PrivacyExtensions(String iface, boolean enable);
+10: void disableIpv6(String iface);
+11: void enableIpv6(String iface);
+12: RouteInfo[] getRoutes(String iface);
+13: void addRoute(String iface, in RouteInfo route);
+14: void removeRoute(String iface, in RouteInfo route);
+15: void addSecondaryRoute(String iface, in RouteInfo route);
+16: void removeSecondaryRoute(String iface, in RouteInfo route);
+17: void shutdown();
+18: boolean getIpForwardingEnabled();
+19: void setIpForwardingEnabled(boolean enabled);
+20: void startTethering(in String[] dhcpRanges);
+21: void stopTethering();
+22: boolean isTetheringStarted();
+23: void startReverseTethering(in String iface);
+24: void stopReverseTethering();
+25: void tetherInterface(String iface);
+26: void untetherInterface(String iface);
+27: String[] listTetheredInterfaces();
+28: Sets the list of DNS forwarders (in order of priority)
+              void setDnsForwarders(in String[] dns);
+29: Returns the list of DNS fowarders (in order of priority)
+              String[] getDnsForwarders();
+30: void enableNat(String internalInterface, String externalInterface);
+31: void disableNat(String internalInterface, String externalInterface);
+32: String[] listTtys();
+33: void attachPppd(String tty, String localAddr, String remoteAddr, String dns1Addr,
+       String dns2Addr);
+34: void detachPppd(String tty);
+35: void wifiFirmwareReload(String wlanIface, String mode);
+36: void startAccessPoint(in WifiConfiguration wifiConfig, String iface);
+37: void stopAccessPoint(String iface);
+38: void setAccessPoint(in WifiConfiguration wifiConfig, String iface);
+39: NetworkStats getNetworkStatsSummaryDev();
+40: NetworkStats getNetworkStatsSummaryXt();
+41: NetworkStats getNetworkStatsDetail();
+42: NetworkStats getNetworkStatsUidDetail(int uid);
+43: NetworkStats getNetworkStatsTethering(in String[] ifacePairs);
+44: void setInterfaceQuota(String iface, long quotaBytes);
+45: void removeInterfaceQuota(String iface);
+46: void setInterfaceAlert(String iface, long alertBytes);
+47: void removeInterfaceAlert(String iface);
+48: void setGlobalAlert(long alertBytes);
+49: void setUidNetworkRules(int uid, boolean rejectOnQuotaInterfaces);
+50: boolean isBandwidthControlEnabled();
+51: void setInterfaceThrottle(String iface, int rxKbps, int txKbps);
+52: int getInterfaceRxThrottle(String iface);
+53: int getInterfaceTxThrottle(String iface);
+54: void addIdleTimer(String iface, int timeout, String label);
+55: void removeIdleTimer(String iface);
+56: void setDefaultInterfaceForDns(String iface);
+57: void setDnsServersForInterface(String iface, in String[] servers);
+58: void flushDefaultDnsCache();
+59: void flushInterfaceDnsCache(String iface);
+60: void setFirewallEnabled(boolean enabled);
+61: boolean isFirewallEnabled();
+62: void setFirewallInterfaceRule(String iface, boolean allow);
+63: void setFirewallEgressSourceRule(String addr, boolean allow);
+64: void setFirewallEgressDestRule(String addr, int port, boolean allow);
+65: void setFirewallUidRule(int uid, boolean allow);
+IUpdateLock:
+1: void acquireUpdateLock(IBinder token, String tag);
+2: void releaseUpdateLock(IBinder token);
+ICancellationSignal:
+1: oneway void cancel();
+IAidlTest:
+1: int intMethod(int a);
+2: AidlTest.TestParcelable parcelableIn(in AidlTest.TestParcelable p);
+3: AidlTest.TestParcelable parcelableOut(out AidlTest.TestParcelable p);
+4: AidlTest.TestParcelable parcelableInOut(inout AidlTest.TestParcelable p);
+5: AidlTest.TestParcelable listParcelableLonger(
+       inout List<AidlTest.TestParcelable> list, int index);
+6: int listParcelableShorter(
+       inout List<AidlTest.TestParcelable> list, int index);
+7: boolean[] booleanArray(in boolean[] a0, out boolean[] a1, inout boolean[] a2);
+8: char[] charArray(in char[] a0, out char[] a1, inout char[] a2);
+9: int[] intArray(in int[] a0, out int[] a1, inout int[] a2);
+10: long[] longArray(in long[] a0, out long[] a1, inout long[] a2);
+11: float[] floatArray(in float[] a0, out float[] a1, inout float[] a2);
+12: double[] doubleArray(in double[] a0, out double[] a1, inout double[] a2);
+13: String[] stringArray(in String[] a0, out String[] a1, inout String[] a2);
+14: AidlTest.TestParcelable[] parcelableArray(in AidlTest.TestParcelable[] a0,
+       out AidlTest.TestParcelable[] a1,
+       inout AidlTest.TestParcelable[] a2);
+15: void voidSecurityException();
+16: int intSecurityException();
+IBinderThreadPriorityService:
+1: int getThreadPriority();
+2: String getThreadSchedulerGroup();
+3: void callBack(IBinderThreadPriorityService recurse);
+4: void setPriorityAndCallBack(int priority, IBinderThreadPriorityService recurse);
+IWapPushManager:
+1: int processMessage(String app_id, String content_type, in Intent intent);
+2: boolean addPackage(String x_app_id, String content_type,
+       String package_name, String class_name,
+       int app_type, boolean need_signature, boolean further_processing);
+3: boolean updatePackage(String x_app_id, String content_type,
+       String package_name, String class_name,
+       int app_type, boolean need_signature, boolean further_processing);
+4: boolean deletePackage(String x_app_id, String content_type,
+       String package_name, String class_name);
+ITelephonyRegistry:
+1: void listen(String pkg, IPhoneStateListener callback, int events, boolean notifyNow);
+2: void notifyCallState(int state, String incomingNumber);
+3: void notifyServiceState(in ServiceState state);
+4: void notifySignalStrength(in SignalStrength signalStrength);
+5: void notifyMessageWaitingChanged(boolean mwi);
+6: void notifyCallForwardingChanged(boolean cfi);
+7: void notifyDataActivity(int state);
+8: void notifyDataConnection(int state, boolean isDataConnectivityPossible,
+       String reason, String apn, String apnType, in LinkProperties linkProperties,
+       in LinkCapabilities linkCapabilities, int networkType, boolean roaming);
+9: void notifyDataConnectionFailed(String reason, String apnType);
+10: void notifyCellLocation(in Bundle cellLocation);
+11: void notifyOtaspChanged(in int otaspMode);
+12: void notifyCellInfo(in List<CellInfo> cellInfo);
+IPhoneSubInfo:
+1: String getDeviceId();
+2: String getDeviceSvn();
+3: String getSubscriberId();
+4: String getIccSerialNumber();
+5: String getLine1Number();
+6: String getLine1AlphaTag();
+7: String getMsisdn();
+8: String getVoiceMailNumber();
+9: String getCompleteVoiceMailNumber();
+10: String getVoiceMailAlphaTag();
+11: String getIsimImpi();
+12: String getIsimDomain();
+13: String[] getIsimImpu();
+ITelephony:
+1: void dial(String number);
+2: void call(String number);
+3: boolean showCallScreen();
+4: boolean showCallScreenWithDialpad(boolean showDialpad);
+5: boolean endCall();
+6: if both lines are in use.  (The current behavior is hardwired to
+       answer incoming, end ongoing", which is how the CALL button
+       is specced to behave.)
+              TODO: this should be a oneway call (especially since it's called
+6: TODO: this should be a oneway call (especially since it's called
+       directly from the key queue thread).
+              void answerRingingCall();
+7: If vibrating, stop the vibrator also.)
+              It's safe to call this if the ringer has already been silenced, or
+       even if there's no incoming call.  (If so, this method will do nothing.)
+7: even if there's no incoming call.  (If so, this method will do nothing.)
+              TODO: this should be a oneway call too (see above).
+7: TODO: this should be a oneway call too (see above).
+       Actually *all* the methods here that return void can
+       probably be oneway.)
+              void silenceRinger();
+8: boolean isOffhook();
+9: boolean isRinging();
+10: boolean isIdle();
+11: boolean isRadioOn();
+12: boolean isSimPinEnabled();
+13: void cancelMissedCallsNotification();
+14: boolean supplyPin(String pin);
+15: boolean supplyPuk(String puk, String pin);
+16: without SEND (so <code>dial</code> is not appropriate).
+              param dialString the MMI command to be executed.
+       return true if MMI command is executed.
+              boolean handlePinMmi(String dialString);
+17: void toggleRadioOnOff();
+18: boolean setRadio(boolean turnOn);
+19: void updateServiceLocation();
+20: void enableLocationUpdates();
+21: void disableLocationUpdates();
+22: int enableApnType(String type);
+23: int disableApnType(String type);
+24: boolean enableDataConnectivity();
+25: boolean disableDataConnectivity();
+26: boolean isDataConnectivityPossible();
+27: Bundle getCellLocation();
+28: List<NeighboringCellInfo> getNeighboringCellInfo();
+29: int getCallState();
+30: int getDataActivity();
+31: int getDataState();
+32: int getActivePhoneType();
+33: int getCdmaEriIconIndex();
+34: int getCdmaEriIconMode();
+35: String getCdmaEriText();
+36: boolean needsOtaServiceProvisioning();
+37: int getVoiceMessageCount();
+38: int getNetworkType();
+39: boolean hasIccCard();
+40: int getLteOnCdmaMode();
+41: List<CellInfo> getAllCellInfo();
+IExtendedNetworkService:
+1: void setMmiString(String number);
+2: CharSequence getMmiRunningText();
+3: CharSequence getUserMessage(CharSequence text);
+4: void clearMmiString();
+IPhoneStateListener:
+1: void onServiceStateChanged(in ServiceState serviceState);
+2: void onSignalStrengthChanged(int asu);
+3: void onMessageWaitingIndicatorChanged(boolean mwi);
+4: void onCallForwardingIndicatorChanged(boolean cfi);
+5: void onCellLocationChanged(in Bundle location);
+6: void onCallStateChanged(int state, String incomingNumber);
+7: void onDataConnectionStateChanged(int state, int networkType);
+8: void onDataActivity(int direction);
+9: void onSignalStrengthsChanged(in SignalStrength signalStrength);
+10: void onOtaspChanged(in int otaspMode);
+11: void onCellInfoChanged(in List<CellInfo> cellInfo);
+ISipSessionListener:
+1: void onCalling(in ISipSession session);
+2: void onRinging(in ISipSession session, in SipProfile caller,
+       String sessionDescription);
+3: void onRingingBack(in ISipSession session);
+4: void onCallEstablished(in ISipSession session,
+       String sessionDescription);
+5: void onCallEnded(in ISipSession session);
+6: void onCallBusy(in ISipSession session);
+7: void onCallTransferring(in ISipSession newSession, String sessionDescription);
+8: void onError(in ISipSession session, int errorCode, String errorMessage);
+9: void onCallChangeFailed(in ISipSession session, int errorCode,
+       String errorMessage);
+10: void onRegistering(in ISipSession session);
+11: void onRegistrationDone(in ISipSession session, int duration);
+12: void onRegistrationFailed(in ISipSession session, int errorCode,
+       String errorMessage);
+13: void onRegistrationTimeout(in ISipSession session);
+ISipSession:
+1: String getLocalIp();
+2: SipProfile getLocalProfile();
+3: SipProfile getPeerProfile();
+4: int getState();
+5: boolean isInCall();
+6: String getCallId();
+7: void setListener(in ISipSessionListener listener);
+8: void register(int duration);
+9: void unregister();
+10: void makeCall(in SipProfile callee, String sessionDescription, int timeout);
+11: void answerCall(String sessionDescription, int timeout);
+12: void endCall();
+13: void changeCall(String sessionDescription, int timeout);
+ISipService:
+1: void open(in SipProfile localProfile);
+2: void open3(in SipProfile localProfile,
+       in PendingIntent incomingCallPendingIntent,
+       in ISipSessionListener listener);
+3: void close(in String localProfileUri);
+4: boolean isOpened(String localProfileUri);
+5: boolean isRegistered(String localProfileUri);
+6: void setRegistrationListener(String localProfileUri,
+       ISipSessionListener listener);
+7: ISipSession createSession(in SipProfile localProfile,
+       in ISipSessionListener listener);
+8: ISipSession getPendingSession(String callId);
+9: SipProfile[] getListOfProfiles();
+IDataVerify:
+1: boolean verifyData(in byte[] pdu);
+2: void resetData();
+IRemoteVolumeObserver:
+1: void dispatchRemoteVolumeUpdate(int direction, int value);
+IMediaScannerListener:
+1: void scanCompleted(String path, in Uri uri);
+IRemoteControlDisplay:
+1: void setCurrentClientId(int clientGeneration, in PendingIntent clientMediaIntent,
+       boolean clearing);
+2: void setPlaybackState(int generationId, int state, long stateChangeTimeMs);
+3: void setTransportControlFlags(int generationId, int transportControlFlags);
+4: void setMetadata(int generationId, in Bundle metadata);
+5: void setArtwork(int generationId, in Bitmap artwork);
+6: void setAllMetadata(int generationId, in Bundle metadata, in Bitmap artwork);
+IRingtonePlayer:
+1: void play(IBinder token, in Uri uri, int streamType);
+2: void stop(IBinder token);
+3: boolean isPlaying(IBinder token);
+4: void playAsync(in Uri uri, in UserHandle user, boolean looping, int streamType);
+5: void stopAsync();
+IAudioService:
+1: void adjustVolume(int direction, int flags);
+2: oneway void adjustLocalOrRemoteStreamVolume(int streamType, int direction);
+3: void adjustSuggestedStreamVolume(int direction, int suggestedStreamType, int flags);
+4: void adjustStreamVolume(int streamType, int direction, int flags);
+5: void adjustMasterVolume(int direction, int flags);
+6: void setStreamVolume(int streamType, int index, int flags);
+7: oneway void setRemoteStreamVolume(int index);
+8: void setMasterVolume(int index, int flags);
+9: void setStreamSolo(int streamType, boolean state, IBinder cb);
+10: void setStreamMute(int streamType, boolean state, IBinder cb);
+11: boolean isStreamMute(int streamType);
+12: void setMasterMute(boolean state, int flags, IBinder cb);
+13: boolean isMasterMute();
+14: int getStreamVolume(int streamType);
+15: int getMasterVolume();
+16: int getStreamMaxVolume(int streamType);
+17: int getMasterMaxVolume();
+18: int getLastAudibleStreamVolume(int streamType);
+19: int getLastAudibleMasterVolume();
+20: void setRingerMode(int ringerMode);
+21: int getRingerMode();
+22: void setVibrateSetting(int vibrateType, int vibrateSetting);
+23: int getVibrateSetting(int vibrateType);
+24: boolean shouldVibrate(int vibrateType);
+25: void setMode(int mode, IBinder cb);
+26: int getMode();
+27: oneway void playSoundEffect(int effectType);
+28: oneway void playSoundEffectVolume(int effectType, float volume);
+29: boolean loadSoundEffects();
+30: oneway void unloadSoundEffects();
+31: oneway void reloadAudioSettings();
+32: void setSpeakerphoneOn(boolean on);
+33: boolean isSpeakerphoneOn();
+34: void setBluetoothScoOn(boolean on);
+35: boolean isBluetoothScoOn();
+36: void setBluetoothA2dpOn(boolean on);
+37: boolean isBluetoothA2dpOn();
+38: oneway void setRemoteSubmixOn(boolean on, int address);
+39: int requestAudioFocus(int mainStreamType, int durationHint, IBinder cb, IAudioFocusDispatcher l,
+       String clientId, String callingPackageName);
+40: int abandonAudioFocus(IAudioFocusDispatcher l, String clientId);
+41: void unregisterAudioFocusClient(String clientId);
+42: oneway void dispatchMediaKeyEvent(in KeyEvent keyEvent);
+43: void dispatchMediaKeyEventUnderWakelock(in KeyEvent keyEvent);
+44: oneway void registerMediaButtonIntent(in PendingIntent pi, in ComponentName c);
+45: oneway void unregisterMediaButtonIntent(in PendingIntent pi,  in ComponentName c);
+46: oneway void registerMediaButtonEventReceiverForCalls(in ComponentName c);
+47: oneway void unregisterMediaButtonEventReceiverForCalls();
+48: int registerRemoteControlClient(in PendingIntent mediaIntent,
+       in IRemoteControlClient rcClient, in String callingPackageName);
+49: oneway void unregisterRemoteControlClient(in PendingIntent mediaIntent,
+       in IRemoteControlClient rcClient);
+50: oneway void   registerRemoteControlDisplay(in IRemoteControlDisplay rcd);
+51: oneway void unregisterRemoteControlDisplay(in IRemoteControlDisplay rcd);
+52: oneway void remoteControlDisplayUsesBitmapSize(in IRemoteControlDisplay rcd, int w, int h);
+53: oneway void setPlaybackInfoForRcc(int rccId, int what, int value);
+54: int  getRemoteStreamMaxVolume();
+55: int  getRemoteStreamVolume();
+56: oneway void registerRemoteVolumeObserverForRcc(int rccId, in IRemoteVolumeObserver rvo);
+57: void startBluetoothSco(IBinder cb);
+58: void stopBluetoothSco(IBinder cb);
+59: void forceVolumeControlStream(int streamType, IBinder cb);
+60: void setRingtonePlayer(IRingtonePlayer player);
+61: IRingtonePlayer getRingtonePlayer();
+62: int getMasterStreamType();
+63: void setWiredDeviceConnectionState(int device, int state, String name);
+64: int setBluetoothA2dpDeviceConnectionState(in BluetoothDevice device, int state);
+65: AudioRoutesInfo startWatchingRoutes(in IAudioRoutesObserver observer);
+66: boolean isCameraSoundForced();
+IAudioRoutesObserver:
+1: void dispatchAudioRoutesChanged(in AudioRoutesInfo newRoutes);
+IRemoteControlClient:
+1: void onInformationRequested(int generationId, int infoFlags, int artWidth, int artHeight);
+2: void setCurrentClientGenerationId(int clientGeneration);
+3: void   plugRemoteControlDisplay(IRemoteControlDisplay rcd);
+4: void unplugRemoteControlDisplay(IRemoteControlDisplay rcd);
+IMediaScannerService:
+1: void requestScanFile(String path, String mimeType, in IMediaScannerListener listener);
+2: void scanFile(String path, String mimeType);
+IAudioFocusDispatcher:
+1: void dispatchAudioFocusChange(int focusChange, String clientId);
+ISms:
+1: List<SmsRawData> getAllMessagesFromIccEf();
+2: boolean updateMessageOnIccEf(int messageIndex, int newStatus,
+       in byte[] pdu);
+3: boolean copyMessageToIccEf(int status, in byte[] pdu, in byte[] smsc);
+4: void sendData(in String destAddr, in String scAddr, in int destPort,
+       in byte[] data, in PendingIntent sentIntent, in PendingIntent deliveryIntent);
+5: void sendText(in String destAddr, in String scAddr, in String text,
+       in PendingIntent sentIntent, in PendingIntent deliveryIntent);
+6: code>PendingIntent</code>s (one for each message part) that is
+       broadcast when the corresponding message part has been sent.
+       The result code will be <code>Activity.RESULT_OK<code> for success,
+       or one of these errors:
+       code>RESULT_ERROR_GENERIC_FAILURE</code>
+       code>RESULT_ERROR_RADIO_OFF</code>
+       code>RESULT_ERROR_NULL_PDU</code>.
+       param deliveryIntents if not null, an <code>ArrayList</code> of
+       code>PendingIntent</code>s (one for each message part) that is
+6: code>PendingIntent</code>s (one for each message part) that is
+       broadcast when the corresponding message part has been delivered
+       to the recipient.  The raw pdu of the status report is in the
+       extended data ("pdu").
+              void sendMultipartText(in String destinationAddress, in String scAddress,
+6: void sendMultipartText(in String destinationAddress, in String scAddress,
+       in List<String> parts, in List<PendingIntent> sentIntents,
+       in List<PendingIntent> deliveryIntents);
+7: boolean enableCellBroadcast(int messageIdentifier);
+8: boolean disableCellBroadcast(int messageIdentifier);
+9: boolean enableCellBroadcastRange(int startMessageId, int endMessageId);
+10: boolean disableCellBroadcastRange(int startMessageId, int endMessageId);
+11: int getPremiumSmsPermission(String packageName);
+12: void setPremiumSmsPermission(String packageName, int permission);
+IIccPhoneBook:
+1: List<AdnRecord> getAdnRecordsInEf(int efid);
+2: boolean updateAdnRecordsInEfBySearch(int efid,
+       String oldTag, String oldPhoneNumber,
+       String newTag, String newPhoneNumber,
+       String pin2);
+3: boolean updateAdnRecordsInEfByIndex(int efid, String newTag,
+       String newPhoneNumber, int index,
+       String pin2);
+4: int[] getAdnRecordsSize(int efid);
+ISipSessionListener:
+1: void onCalling(in ISipSession session);
+2: void onRinging(in ISipSession session, in SipProfile caller,
+       String sessionDescription);
+3: void onRingingBack(in ISipSession session);
+4: void onCallEstablished(in ISipSession session,
+       String sessionDescription);
+5: void onCallEnded(in ISipSession session);
+6: void onCallBusy(in ISipSession session);
+7: void onCallTransferring(in ISipSession newSession, String sessionDescription);
+8: void onError(in ISipSession session, int errorCode, String errorMessage);
+9: void onCallChangeFailed(in ISipSession session, int errorCode,
+       String errorMessage);
+10: void onRegistering(in ISipSession session);
+11: void onRegistrationDone(in ISipSession session, int duration);
+12: void onRegistrationFailed(in ISipSession session, int errorCode,
+       String errorMessage);
+13: void onRegistrationTimeout(in ISipSession session);
+ISipSession:
+1: String getLocalIp();
+2: SipProfile getLocalProfile();
+3: SipProfile getPeerProfile();
+4: int getState();
+5: boolean isInCall();
+6: String getCallId();
+7: void setListener(in ISipSessionListener listener);
+8: void register(int duration);
+9: void unregister();
+10: void makeCall(in SipProfile callee, String sessionDescription, int timeout);
+11: void answerCall(String sessionDescription, int timeout);
+12: void endCall();
+13: void changeCall(String sessionDescription, int timeout);
+ISipService:
+1: void open(in SipProfile localProfile);
+2: void open3(in SipProfile localProfile,
+       in PendingIntent incomingCallPendingIntent,
+       in ISipSessionListener listener);
+3: void close(in String localProfileUri);
+4: boolean isOpened(String localProfileUri);
+5: boolean isRegistered(String localProfileUri);
+6: void setRegistrationListener(String localProfileUri,
+       ISipSessionListener listener);
+7: ISipSession createSession(in SipProfile localProfile,
+       in ISipSessionListener listener);
+8: ISipSession getPendingSession(String callId);
+9: SipProfile[] getListOfProfiles();
+ILearning_MulticlassPA:
+1: void TrainOneSample(in List<IntFloat> sample, int target);
+2: int Classify(in List<IntFloat> sample);
+IBordeauxServiceCallback:
+1: void valueChanged(int value);
+IPredictor:
+1: boolean setPredictorParameter( in String s, in String f );
+2: void pushNewSample(in String s);
+3: void ResetPredictor();
+4: float getSampleProbability(in String s);
+IBordeauxService:
+1: IBinder getRanker(String name);
+2: IBinder getClassifier(String name);
+3: IBinder getAggregatorManager();
+4: IBinder getPredictor(String name);
+5: void registerCallback(IBordeauxServiceCallback cb);
+6: void unregisterCallback(IBordeauxServiceCallback cb);
+ILearning_StochasticLinearRanker:
+1: boolean UpdateClassifier(in List<StringFloat> sample_1, in List<StringFloat> sample_2);
+2: float ScoreSample(in List<StringFloat> sample);
+3: void ResetRanker();
+4: boolean SetModelPriorWeight(in List<StringFloat> weight);
+5: boolean SetModelParameter(in String key, in String value);
+IAggregatorManager:
+1: List<StringString> getData(in String dataName);

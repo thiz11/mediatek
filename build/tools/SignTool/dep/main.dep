@@ -1,0 +1,12 @@
+obj/main.o: core/main.c /usr/include/stdc-predef.h /usr/include/stdio.h \
+ /usr/include/features.h /usr/local/include/sys/cdefs.h \
+ /usr/local/include/bits/wordsize.h /usr/local/include/gnu/stubs.h \
+ /usr/local/include/gnu/stubs-32.h \
+ /usr/lib/gcc/x86_64-linux-gnu/4.9/include/stddef.h \
+ /usr/local/include/bits/types.h /usr/local/include/bits/typesizes.h \
+ /usr/include/libio.h /usr/include/_G_config.h /usr/include/wchar.h \
+ /usr/lib/gcc/x86_64-linux-gnu/4.9/include/stdarg.h \
+ /usr/local/include/bits/stdio_lim.h \
+ /usr/local/include/bits/sys_errlist.h /usr/include/string.h \
+ /usr/include/xlocale.h inc/build_info.h inc/lib_sign_export.h \
+ inc/type_defs.h

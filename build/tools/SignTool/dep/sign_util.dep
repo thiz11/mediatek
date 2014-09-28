@@ -1,0 +1,21 @@
+obj/sign_util.o: auth/sign_util.c /usr/include/stdc-predef.h \
+ /usr/include/stdio.h /usr/include/features.h \
+ /usr/local/include/sys/cdefs.h /usr/local/include/bits/wordsize.h \
+ /usr/local/include/gnu/stubs.h /usr/local/include/gnu/stubs-32.h \
+ /usr/lib/gcc/x86_64-linux-gnu/4.9/include/stddef.h \
+ /usr/local/include/bits/types.h /usr/local/include/bits/typesizes.h \
+ /usr/include/libio.h /usr/include/_G_config.h /usr/include/wchar.h \
+ /usr/lib/gcc/x86_64-linux-gnu/4.9/include/stdarg.h \
+ /usr/local/include/bits/stdio_lim.h \
+ /usr/local/include/bits/sys_errlist.h /usr/include/stdlib.h \
+ /usr/local/include/bits/waitflags.h /usr/local/include/bits/waitstatus.h \
+ /usr/include/endian.h /usr/local/include/bits/endian.h \
+ /usr/local/include/bits/byteswap.h /usr/local/include/bits/byteswap-16.h \
+ /usr/local/include/sys/types.h /usr/include/time.h \
+ /usr/local/include/sys/select.h /usr/local/include/bits/select.h \
+ /usr/local/include/bits/sigset.h /usr/local/include/bits/time.h \
+ /usr/local/include/sys/sysmacros.h \
+ /usr/local/include/bits/pthreadtypes.h /usr/include/alloca.h \
+ /usr/local/include/bits/stdlib-float.h /usr/include/string.h \
+ /usr/include/xlocale.h inc/type_defs.h auth/inc/sign_extension.h \
+ auth/inc/sign_header.h auth/inc/sign_img.h

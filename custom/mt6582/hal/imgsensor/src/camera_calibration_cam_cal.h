@@ -1,0 +1,14 @@
+
+#ifndef __CAMERA_CALIBRATION_CAM_CAL_H
+#define __CAMERA_CALIBRATION_CAM_CAL_H
+
+UINT32 CAM_CALGetCalData(UINT32* pGetSensorCalData);
+
+
+
+////
+
+
+
+#endif /* __CAMERA_CALIBRATION_H */
+
